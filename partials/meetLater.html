@@ -1,4 +1,24 @@
 <div class="text-center" id="meetLater">
-   <h1>Meet Later</h1>
-     {{controller}}
+  <div class="container-fluid" id="meetNow">
+    <div class="jumbotron col-xs-10 col-xs-offset-1">
+      <form name="meetLater" validate>
+      <p>Meet</p>
+      <select class="form-control form-group" ng-model="meet.where" required>
+        <option value=".25">Closer to Location 1</option>
+        <option value=".5">In the middle</option>
+        <option value=".75">Closer to Location 2</option>
+      </select>
+      <label class="radio-inline">
+        <input type="radio" name="routeByRadioOptions" id="distanceRadio" value="Distance" ng-model="meet.routeBy"> Distance
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="routeByRadioOptions" id="timeRadio" value="Time" ng-model="meet.routeBy"> Time
+      </label>
+      <p>Location 1</p>
+      <input type="text" class="form-control form-group" placeholder="500 Interstate Blvd." ng-model="meet.marker1" required>
+      <p>Location 2</p>
+      <input type="text" class="form-control form-group" placeholder="1010 Murfreesboro Rd." ng-model="meet.marker2" required>
+      <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="meetNowDetails(meet)">Meet Where</a></button>
+    </div>
+  </div>
  </div>

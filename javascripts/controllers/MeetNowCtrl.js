@@ -2,8 +2,8 @@
 
 app.controller("MeetNowCtrl", function($scope){
 
-  $scope.meetNowDetails = (event) => {
-    console.log(event);
+  $scope.meetNowDetails = (meet) => {
+    console.log(meet);
   }
 
  });
