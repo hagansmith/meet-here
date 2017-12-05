@@ -25,22 +25,22 @@ app.run(function($location, $rootScope, FIREBASE_CONFIG, AuthService){
       // check if the user is going to the auth page = currRoute.originalPath
       // if user is on auth page then appTo is true
       // if it finds something other than /auth it return a -1 and -1!==-1 so resolves to false
-      appTo = currRoute.originalPath.indexOf('/meetProfile') !== -1;
+      appTo = currRoute.originalPath.indexOf('/auth') !== -1;
     }
 
     //if not on /auth page AND not logged in redirect to /auth
     if (!appTo && !logged) {
-      //if not on /auth page AND not logged in redirect to /auth
+      //if not on /auth page AND not logged in redirect to /newMeet
       event.preventDefault();
        $rootScope.navbar = false;
-       $location.path('/newMeet');
+       $location.path('/');
     } else if (appTo && !logged){
      //if on /auth page AND not logged in, no redirect only authentiate in navbar
        $rootScope.navbar = false;
     } else if (appTo && logged){
      //if on /auth page AND logged in, redirect to search page
          $rootScope.navbar = true;
-         $location.path('/newMeet');
+         $location.path('/meetProfile');
      } else if (!appTo && logged){
              //if not on /auth page AND logged in see other navbar
              $rootScope.navbar = true;
