@@ -5,6 +5,7 @@ app.controller("NavCtrl", function($location, $rootScope, $scope, $window, AuthS
     delete $rootScope.uid;
     $window.localStorage.clear();
     AuthService.logout();
+    $rootScope.navbar = false;
     $location.path('/newMeet');
   };
 });
