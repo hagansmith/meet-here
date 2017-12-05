@@ -1,4 +1,20 @@
-<div class="text-center" id="meetNow">
-   <h1>Meet Now</h1>
-     {{controller}}
- </div>
+<div class="container-fluid" id="meetNow">
+  <div class="jumbotron col-xs-10 col-xs-offset-1">
+    <form name="meetNow" validate>
+    <p>Meet In</p>
+    <select class="form-control form-group" ng-model="meet.min" required>
+      <option>5 min</option>
+      <option>10 min</option>
+      <option>15 min</option>
+      <option>20 min</option>
+      <option>25 min</option>
+      <option>30 min</option>
+      <option>35 min</option>
+    </select>
+    <p>Location 1</p>
+    <input type="text" class="form-control form-group" placeholder="500 Interstate Blvd." ng-model="meet.marker1" required>
+    <p>Location 2</p>
+    <input type="text" class="form-control form-group" placeholder="1010 Murfreesboro Rd." ng-model="meet.marker2" required>
+    <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="meetNowDetails(meet)">Meet Where</a></button>
+  </div>
+</div>

@@ -1,5 +1,9 @@
 "use strict";
 
 app.controller("MeetNowCtrl", function($scope){
-   $scope.controller = "MeetNowCtrl";
+
+  $scope.meetNowDetails = (event) => {
+    console.log(event);
+  }
+
  });
