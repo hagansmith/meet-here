@@ -1,4 +1,11 @@
-<div class="text-center" id="meetHere">
-   <h1>Meet Here</h1>
-     {{controller}}
- </div>
+<div class="container-fluid" id="meetHere">
+  <h1>Meet Here</h1>
+   <container class="container jumbotron">
+     <ng-map zoom="5" center="[40.74, -74.18]">
+       <marker position="[40.74, -74.18]" />
+       <marker position="[41.74, -70.18]" />
+       <shape name="circle" radius="400" center="[40.74,-74.18]" radius="4000" />
+       <control name="overviewMap" opened="true" />
+    </ng-map>`
+   </container>
+</div>

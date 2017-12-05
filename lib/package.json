@@ -26,6 +26,8 @@
     "angular-route": "^1.6.7",
     "angular-sanitize": "^1.6.7",
     "bootstrap": "^3.3.7",
-    "jquery": "^3.2.1"
+    "google-maps": "^3.2.1",
+    "jquery": "^3.2.1",
+    "ngmap": "^1.18.4"
   }
 }
