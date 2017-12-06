@@ -1,0 +1,59 @@
+{
+  "users": {
+    "user1": {
+      "name":"Adam Smith",
+      "uid":"dpFYNMJx3DfQChEHANaXmvx28E83"
+    },
+    "user2":{
+      "name":"Test User",
+      "uid":"foobar"
+    }
+  },
+  "meets": {
+    "meet1": {
+      "uid":"dpFYNMJx3DfQChEHANaXmvx28E83",
+      "saved":false,
+      "history":true
+    },
+    "meet2": {
+      "uid":"foobar",
+      "saved":true,
+      "history":true
+      }
+    },
+
+  "markers" : {
+    "marker1": {
+      "lat": 40.714,
+      "lng": -74.006,
+      "meetid": 1
+    },
+    "marker2": {
+      "lat": 48.857,
+      "lng": 2.352,
+      "meetid": 1
+    },
+    "marker3": {
+      "lat": 35.92,
+      "lng": -86.87,
+      "meetid": 2
+    },
+    "marker4": {
+      "lat": 33.96,
+      "lng": -83.35,
+      "meetid": 2
+    }
+  },
+  "meetLocations": {
+    "location1": {
+      "positionlat": 33.96,
+      "positionlng": -83.35,
+      "meetid": 1
+    },
+    "location2": {
+      "positionlat": 33.96,
+      "positionlng": -83.35,
+      "meetid": 2
+    }
+  }
+}
