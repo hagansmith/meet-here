@@ -5,7 +5,6 @@ app.controller("MeetHereCtrl", function($routeParams, $scope, MapService){
 
  const getSingleMeet = () => {
    MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
-     console.log(results);
      $scope.meet=results;
      gMaps(results);
    }).catch((error)=>{
@@ -74,10 +73,6 @@ const gMaps = (results) => {
       poly.setPath(path);
       // geodesicPoly.setPath(path);
       var heading = google.maps.geometry.spherical.computeHeading(path[0], path[1]);
-      //midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(),.5);
-
-      console.log("midPoint:\r\nlat: " + midPoint.lat() + ", lng: " + midPoint.lng());
-      //marker3.push( position : {midPoint.lat(), midPoint.lng()} );
       document.getElementById('heading').value = heading;
       document.getElementById('origin').value = path[0].toString();
       document.getElementById('destination').value = path[1].toString();

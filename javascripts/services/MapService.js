@@ -8,7 +8,6 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
   };
 
   const getCurrentMeet = (meetId) => {
-    //meetData = [];
     return $q((resolve, reject) => {
       $http.get(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`).then((meet) =>{
     resolve(meet.data);
@@ -40,12 +39,6 @@ const getMeetLocationsByMeetId = (meetId) => {
 
 const getAllMapDataForCurrentMeet = (meetId) => {
   let meetData = {};
-    // return Promise.all([getCurrentMeet(meetId), getMarkersByMeetId(meetId), getMeetLocationsByMeetId(meetId)]).then((results) => {
-    //   results.forEach((result) =>{
-    //     console.log(result);
-    //
-    //   });
-    // });
     return $q((resolve, reject) => {
       return getCurrentMeet(meetId)
     .then((meet) => {
