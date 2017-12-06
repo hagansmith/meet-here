@@ -11,13 +11,6 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
     //meetData = [];
     return $q((resolve, reject) => {
       $http.get(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`).then((meet) =>{
-        //meetData.push(meet.data);
-  //   return getMarkersByMeetId(meetId);
-  // }).then((markers)=>{
-  //   meetData.push(markers);
-  //   return getMeetLocationsByMeetId(meetId);
-  // }).then((locations)=>{
-  //   meetData.push(locations);
     resolve(meet.data);
   }).catch((error)=>{
       console.log("error in service getCurrentMeet", error);
@@ -46,22 +39,38 @@ const getMeetLocationsByMeetId = (meetId) => {
 };
 
 const getAllMapDataForCurrentMeet = (meetId) => {
-let meetData = [];
-  return $q((resolve, reject) => {
-  return getCurrentMeet(meetId)
-.then((meet) => {
-  meetData.push(meet);
-  return getMarkersByMeetId(meetId);
-}).then((markers)=>{
-  meetData.push(markers);
-  return getMeetLocationsByMeetId(meetId);
-}).then((locations)=>{
-  meetData.push(locations);
-  resolve(meetData)
-}).catch((error) => {
-  console.log("error in service getAllMapDataForCurrentMeet", error);
-});
-});
+  let meetData = {};
+    // return Promise.all([getCurrentMeet(meetId), getMarkersByMeetId(meetId), getMeetLocationsByMeetId(meetId)]).then((results) => {
+    //   results.forEach((result) =>{
+    //     console.log(result);
+    //
+    //   });
+    // });
+    return $q((resolve, reject) => {
+      return getCurrentMeet(meetId)
+    .then((meet) => {
+      Object.keys(meet).forEach((key)=>{
+        meetData[key] = meet[key];
+      });
+      return getMarkersByMeetId(meetId);
+    }).then((markers)=>{
+      let markersArray = [];
+      Object.keys(markers).forEach((key)=>{
+        markers[key].id = key;
+        markersArray.push(markers[key]);
+      });
+      meetData.marker1 = markersArray[0];
+      meetData.marker2 = markersArray[1];
+      return getMeetLocationsByMeetId(meetId);
+    }).then((locations)=>{
+      Object.keys(locations).forEach((key)=>{
+        meetData[key] = locations[key];
+      });
+      resolve(meetData)
+    }).catch((error) => {
+      console.log("error in service getAllMapDataForCurrentMeet", error);
+    });
+  });
 };
 
   const getMapByAddressQuery = (address) => {
