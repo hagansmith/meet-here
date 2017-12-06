@@ -1,4 +1,4 @@
-"use strict";
+
 
 let isAuth = (AuthService) => new Promise ((resolve, reject) => {
   if(AuthService.isAuthenticated()){
@@ -8,9 +8,11 @@ let isAuth = (AuthService) => new Promise ((resolve, reject) => {
   }
 });
 
-app.run(function($location, $rootScope, FIREBASE_CONFIG, AuthService){
+app.run(function($location, $rootScope, FIREBASE_CONFIG, MAP_CONFIG, AuthService){
   firebase.initializeApp(FIREBASE_CONFIG);
-
+  GoogleMapsLoader.KEY = MAP_CONFIG;
+  GoogleMapsLoader.LIBRARIES = ['geometry', 'places'];
+  GoogleMapsLoader.load(function(google) { });
   //watch method that fires on change of a route.  3 inputs.
   //event is a change event
   //currRoute is information about your current route

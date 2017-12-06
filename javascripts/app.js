@@ -1,5 +1,5 @@
 /* globals app: true */
 
-"use strict";
 
-const app = angular.module("MeetHere", ["ngAnimate", "ngRoute", "ngSanitize", "ngMap"]);
+
+const app = angular.module("MeetHere", ["ngAnimate", "ngRoute", "ngSanitize"]);

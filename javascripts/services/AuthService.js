@@ -1,4 +1,4 @@
-"use strict";
+
 
 app.service("AuthService", function($window, FIREBASE_CONFIG){
   const authenticateGoogle = () => {

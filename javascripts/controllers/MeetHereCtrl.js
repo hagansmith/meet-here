@@ -1,20 +1,18 @@
-"use strict";
-
-app.controller("MeetHereCtrl", function($scope, $window, MAP_CONFIG){
-
-  $window.GoogleMapsLoader.onLoad(function (google) {
-    console.log("maps loaded");
-      $window.GoogleMapsLoader.KEY = '${MAP_CONFIG}';
-      $window.GoogleMapsLoader.LIBRARIES = ['geometry', 'places'];
-      var options = {
-        zoom: 11,
-        center: new google.maps.LatLng(54.5767, -1.2355)
-      };
-      console.log(options);
-      new google.maps.Map(document.getElementById('map'), options);
 
 
-    // new google.maps.Map(document.getElementById('map'), mapOptions);
-  });
+app.controller("MeetHereCtrl", function($scope){
+$scope.controller = "MeetHereCtrl";
+  console.log("in lofasd");
+
+  GoogleMapsLoader.load(function(google) {
+      new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 8
+      });
+    });
+
+    GoogleMapsLoader.onLoad(function() {
+      console.log('I just loaded google maps api');
+    });
 
 });

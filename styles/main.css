@@ -14,3 +14,6 @@ input[type="text"]:focus,
 select.form-control:focus {
   -webkit-box-shadow: none;
   box-shadow: none; }
+
+#map {
+  height: 400px; }

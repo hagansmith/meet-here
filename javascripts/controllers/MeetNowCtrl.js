@@ -1,4 +1,4 @@
-"use strict";
+
 
 app.controller("MeetNowCtrl", function($scope){
 
