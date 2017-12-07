@@ -59,17 +59,43 @@ const getAllMapDataForCurrentMeet = (meetId) => {
       Object.keys(locations).forEach((key)=>{
         meetData[key] = locations[key];
       });
-      resolve(meetData)
+      resolve(meetData);
     }).catch((error) => {
       console.log("error in service getAllMapDataForCurrentMeet", error);
     });
   });
 };
 
+const getMeetInfoByUid = (userUid) => {
+  let meets = [];
+  return $q((resolve, reject) => {
+    $http.get(`${FIREBASE_CONFIG.databaseURL}/meets.json?orderBy="uid"&equalTo="${userUid}"`).then((results)=>{
+      let fbMeets = results.data;
+      Object.keys(fbMeets).forEach((key) => {
+          getAllMapDataForCurrentMeet(key).then((mapData)=>{
+          meets.push(mapData);
+        });
+      });
+      resolve (meets);
+    }).catch((err)=>{
+      reject(err);
+    });
+  });
+};
+
+
   const getMapByAddressQuery = (address) => {
         return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${MAP_CONFIG}`);
     };
 
-  return { getMapByAddressQuery, getAllMapDataForCurrentMeet, saveQuery };
+const reverseGeocode = (coord) => {
+  return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coord.lat},${coord.lng}&key=${MAP_CONFIG}`);
+};
+
+const saveReadableAddressToDataBase = (address) => {
+    return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
+}
+
+  return { getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, reverseGeocode, saveReadableAddressToDataBase, saveQuery };
 
 });

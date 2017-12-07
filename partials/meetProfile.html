@@ -1,4 +1,24 @@
-<div class="text-center" id="meetProfile">
-   <h1>Profile</h1>
-     {{controller}}
- </div>
+<div class="" id="meetProfile">
+  <div class="jumbotron col-xs-10 col-xs-offset-1">
+    <h1>Meets</h1>
+    <div id="searchHistory">
+      <p> Search History </p>
+      <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+      <p> {{meet.meetName}} </p>
+      <p> Meet Location 1 | Meet Location 2 </p> 
+      <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+    </div>
+    <hr>
+    <div id="savedMeets">
+      <p> Saved Meets </p>
+        <div id="meet" ng-repeat="meet in meets">
+          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+          <p> {{meet.meetName}} </p>
+          <p> Meet Location 1 | Meet Location 2 </p>
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+          <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
+          <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</div>

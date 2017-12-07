@@ -15,9 +15,10 @@
         <input type="radio" name="routeByRadioOptions" id="timeRadio" value="Time" ng-model="meet.routeBy"> Time
       </label>
       <p>Location 1</p>
-      <input type="text" class="form-control form-group" placeholder="500 Interstate Blvd." ng-model="meet.marker1" required>
+      <input type="text" id="autocomplete" ngFocus="initAutocomplete()" class="form-control form-group" placeholder="500 Interstate Blvd." ng-model="currentLocation">
+      <button type="submit" class="btn btn-default col-xs-3 col-xs-offset-9" ng-click="useCurrentLocation()" ng-model-options="{ getterSetter: true }">Use Current Location</a></button>
       <p>Location 2</p>
-      <input type="text" class="form-control form-group" placeholder="1010 Murfreesboro Rd." ng-model="meet.marker2" required>
+      <input type="text" id="autocomplete" class="form-control form-group" placeholder="1010 Murfreesboro Rd." ng-model="meet.marker2" required>
       <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="meetNowDetails(meet)">Meet Where</a></button>
     </div>
   </div>

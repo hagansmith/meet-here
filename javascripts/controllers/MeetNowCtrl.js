@@ -14,7 +14,7 @@ app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService
       $location.path(`/MeetHere/${meetId}`);
     }).catch((error) => {
       console.log("error in controller, meetNowDetails", error);
-    })
+    });
 
   };
 });
