@@ -34,6 +34,47 @@ app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapServi
     }).catch((error) => {
       console.log("error in controller, meetNowDetails", error);
     });
-
   };
+
+
+    InitAutocomplete = () => {
+      GoogleMapsLoader.load(function(google) {
+       // Create the autocomplete object, restricting the search to geographical
+       // location types.
+      let autocomplete = new google.maps.places.Autocomplete(
+           /** @type {!HTMLInputElement} */(document.getElementById("autocomplete2")),
+           {types: ['geocode']});
+       // When the user selects an address from the dropdown, populate the address
+       // fields in the form.
+     fillInAddress = () => {
+         // Get the place details from the autocomplete object.
+         var place = autocomplete.getPlace();
+         console.log(place.geometry.location.lat());
+         var val = place.formatted_address;
+           document.getElementById('autocomplete2').value = val;
+     }
+     autocomplete.addListener('place_changed', fillInAddress);
+     // Bias the autocomplete object to the user's geographical location,
+     // as supplied by the browser's 'navigator.geolocation' object.
+    geolocate = () => {
+       if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(function(position) {
+           var geolocation = {
+             lat: position.coords.latitude,
+             lng: position.coords.longitude
+           };
+           var circle = new google.maps.Circle({
+             center: geolocation,
+             radius: position.coords.accuracy
+           });
+           autocomplete.setBounds(circle.getBounds());
+         });
+       }
+     };
+   });
+ }
+
+InitAutocomplete();
+
+
  });
