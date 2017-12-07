@@ -2,9 +2,29 @@
 
 app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
 
-  const saveQuery = (meet) => {
-    //convert standard data to coordinates then post
-    return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
+  const saveMeetInfo = (meet) => {
+    let meetObject = {
+      history: meet.history,
+      routeBy: meet.routeBy,
+      uid: meet.uid,
+      where: meet.where
+    }
+    return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meetObject));
+  };
+
+  const saveMarkerInfo = (meet, meetId) => {
+    let markerObject1 = {
+      meetid : meetId,
+      address : meet.marker1
+    }
+
+    let markerObject2 = {
+      meetid : meetId,
+      address : meet.marker2
+    }
+  return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject1)).then((result) =>{
+    return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject2))
+    });
   };
 
   const getCurrentMeet = (meetId) => {
@@ -99,6 +119,6 @@ const saveReadableAddressToDataBase = (address) => {
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
 }
 
-  return { getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, reverseGeocode, saveReadableAddressToDataBase, saveQuery };
+  return { getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, reverseGeocode, saveReadableAddressToDataBase, saveMarkerInfo, saveMeetInfo };
 
 });
