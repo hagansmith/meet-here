@@ -35,7 +35,7 @@ const gMaps = (results) => {
         position: {lat: results.marker2.lat, lng: results.marker2.lng}
       });
 
-      midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(),.5)
+      midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(),".5");
 
       marker3 = new google.maps.Marker({
         map: map,
@@ -82,10 +82,10 @@ const gMaps = (results) => {
 
 $scope.meetNowDetails = (meet) => {
   console.log("in meetNowDetails", meet);
-}
+};
 
 $scope.saveDetail = (meet) => {
   console.log("in SaveDetail" , meet);
-}
+};
 
 });

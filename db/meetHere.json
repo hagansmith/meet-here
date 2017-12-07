@@ -11,11 +11,13 @@
   },
   "meets": {
     "meet1": {
+      "name": "My First Meet",
       "uid":"dpFYNMJx3DfQChEHANaXmvx28E83",
       "saved":false,
       "history":true
     },
     "meet2": {
+      "name": "Another Meet",
       "uid":"foobar",
       "saved":true,
       "history":true
@@ -46,13 +48,13 @@
   },
   "meetLocations": {
     "location1": {
-      "positionlat": 33.96,
-      "positionlng": -83.35,
+      "lat": 33.96,
+      "lng": -83.35,
       "meetid": 1
     },
     "location2": {
-      "positionlat": 33.96,
-      "positionlng": -83.35,
+      "lat": 33.96,
+      "lng": -83.35,
       "meetid": 2
     }
   }

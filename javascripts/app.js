@@ -1,3 +1,3 @@
 /* globals app: true */
 
-const app = angular.module("MeetHere", ["ngAnimate", "ngRoute", "ngSanitize"]);
+const app = angular.module("MeetHere", ["ngAnimate", "ngRoute", "ngSanitize", 'angular-toArrayFilter']);

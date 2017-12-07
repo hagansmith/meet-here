@@ -1,4 +1,25 @@
-<div class="text-center" id="meetProfile">
-   <h1>Profile</h1>
-     {{controller}}
- </div>
+<div class="" id="meetProfile">
+  <div class="jumbotron col-xs-10 col-xs-offset-1">
+    <h2>Meets</h2>
+    <div id="searchHistory" class="col-xs-12">
+      <h4> Search History </h4>
+      <div id="meet" class="col-xs-10s" ng-repeat="meet in meets">
+      <span class="glyphicon glyphicon-map-marker col-xs-1" aria-hidden="true"></span>
+      <p class="col-xs-3"> {{meet.meetName}} </p><p class="col-xs-3">{{meet.location.address}}</p>
+      <p> {{meet.marker1.address}} | {{meet.marker2.address}}</p>
+      <a ng-click = "saveMeet(meet.location.meetid)"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
+      </div>
+    </div>
+    <hr>
+    <div id="savedMeets" class="col-xs-12">
+      <h4> Saved Meets </h4>
+        <div id="meet" class="col-xs-12" ng-repeat="meet in meets" ng-show="meet.saved" >
+          <span class="glyphicon glyphicon-map-marker col-xs-1" aria-hidden="true"></span>
+            <p class="col-xs-3"> {{meet.meetName}} </p><p class="col-xs-3">{{meet.location.address}}</p>
+            <p> {{meet.marker1.address}} | {{meet.marker2.address}}</p>
+          <a class="edit" ng-click = "editMeet(meet.location.meetid)"><span class="glyphicon glyphicon-edit col-xs-1" aria-hidden="true"></span></a>
+          <a class="erase" ng-click = "eraseMeet(meet.location.meetid)"><span class="glyphicon glyphicon-erase col-xs-1" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
