@@ -2,6 +2,8 @@
 
 app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapService){
 
+// need to push lat lng from geo and auto into the object
+let meetMarkers = {};
 
 // use current location to fill in address
   $scope.useCurrentLocation = () => {
@@ -11,6 +13,7 @@ app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapServi
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+        meetMarkers.marker1 = { pos };
         MapService.reverseGeocode(pos).then((result)=> {
           $scope.currentLocation = result.data.results[0].formatted_address;
         });
@@ -18,9 +21,9 @@ app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapServi
     }
   };
 
-
+// Save meet details
   $scope.meetLaterDetails = (meet) => {
-// check for a user uid if no id then assign id of randomUid
+    // check for a user uid if no id then assign id of randomUid
     if (!$rootScope.uid) {
       meet.uid = "noUid";
     } else {
@@ -29,14 +32,14 @@ app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapServi
       meet.history = true;
     MapService.saveMeetInfo(meet).then((result)=> {
       let meetId = result.data.name;
-      MapService.saveMarkerInfo(meet, meetId);
+      MapService.saveMarkerInfo(meet, meetMarkers, meetId);
       $location.path(`/MeetHere/${meetId}`);
     }).catch((error) => {
       console.log("error in controller, meetNowDetails", error);
     });
   };
 
-
+// Autocomplete address
     InitAutocomplete = () => {
       GoogleMapsLoader.load(function(google) {
        // Create the autocomplete object, restricting the search to geographical
@@ -44,16 +47,21 @@ app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapServi
       let autocomplete = new google.maps.places.Autocomplete(
            /** @type {!HTMLInputElement} */(document.getElementById("autocomplete2")),
            {types: ['geocode']});
+
        // When the user selects an address from the dropdown, populate the address
        // fields in the form.
      fillInAddress = () => {
          // Get the place details from the autocomplete object.
          var place = autocomplete.getPlace();
-         console.log(place.geometry.location.lat());
+         let place1 = place.geometry.location.lat()
+         let place2 =place.geometry.location.lng()
+         meetMarkers.marker2 = {lat: place1, lng:place2};
          var val = place.formatted_address;
            document.getElementById('autocomplete2').value = val;
      }
+
      autocomplete.addListener('place_changed', fillInAddress);
+
      // Bias the autocomplete object to the user's geographical location,
      // as supplied by the browser's 'navigator.geolocation' object.
     geolocate = () => {
@@ -72,9 +80,8 @@ app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapServi
        }
      };
    });
- }
+  }
 
-InitAutocomplete();
-
+  InitAutocomplete();
 
  });

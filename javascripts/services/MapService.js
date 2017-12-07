@@ -12,15 +12,20 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meetObject));
   };
 
-  const saveMarkerInfo = (meet, meetId) => {
+  const saveMarkerInfo = (meet, meetMarkers, meetId) => {
+    console.log(meetMarkers);
     let markerObject1 = {
       meetid : meetId,
-      address : meet.marker1
+      address : meet.marker1,
+      lat: meetMarkers.marker1.pos.lat,
+      lng: meetMarkers.marker1.pos.lng
     }
 
     let markerObject2 = {
       meetid : meetId,
-      address : meet.marker2
+      address : meet.marker2,
+      lat: meetMarkers.marker2.lat,
+      lng: meetMarkers.marker2.lng
     }
   return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject1)).then((result) =>{
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject2))
