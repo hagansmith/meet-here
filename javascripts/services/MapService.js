@@ -56,9 +56,12 @@ const getAllMapDataForCurrentMeet = (meetId) => {
       meetData.marker2 = markersArray[1];
       return getMeetLocationsByMeetId(meetId);
     }).then((locations)=>{
+      let locationArray = [];
       Object.keys(locations).forEach((key)=>{
-        meetData[key] = locations[key];
+        locations[key].id = key
+        locationArray.push(locations[key]);
       });
+        meetData.location = locationArray[0];
       resolve(meetData);
     }).catch((error) => {
       console.log("error in service getAllMapDataForCurrentMeet", error);
