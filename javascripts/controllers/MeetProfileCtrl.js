@@ -1,6 +1,6 @@
 
 
-app.controller("MeetProfileCtrl", function($rootScope, $scope, MapService){
+app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService){
    $scope.meets = {};
 
    const loadMeetProfile = ( ) => {
@@ -18,9 +18,9 @@ app.controller("MeetProfileCtrl", function($rootScope, $scope, MapService){
 
    loadMeetProfile();
 
-   $scope.editMeet = (meetid) => {
-     console.log(meetid);
-   }
+   $scope.viewMeet = (meetId) => {
+     $location.path(`/MeetHere/${meetId}`)
+   };
 
    $scope.deleteMeet = (meetid) => {
      console.log(meetid);
@@ -29,5 +29,5 @@ app.controller("MeetProfileCtrl", function($rootScope, $scope, MapService){
    $scope.saveMeet = (meetid) => {
      console.log(meetid);
    }
-   
+
  });
