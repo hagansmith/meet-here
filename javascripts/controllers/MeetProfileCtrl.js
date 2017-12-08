@@ -22,8 +22,6 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapSer
    };
 
    $scope.eraseMeet = (meetid) => {
-     //MapService.deleteLocations(meetid);
-     //MapService.deleteMarkers(meetid);
      MapService.deleteMeet(meetid);
      loadMeetProfile();
    }
