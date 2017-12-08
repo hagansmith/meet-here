@@ -2,8 +2,7 @@
 
 app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapService){
 
-// need to push lat lng from geo and auto into the object
-let meetMarkers = {};
+  let meetMarkers = {};
 
 // use current location to fill in address
   $scope.useCurrentLocation = () => {
@@ -15,7 +14,6 @@ let meetMarkers = {};
         };
         meetMarkers.marker1 = { pos };
         MapService.reverseGeocode(pos).then((result)=> {
-          console.log(result);
           $scope.meet.marker1 = result.data.results[0].formatted_address;
         });
       });
