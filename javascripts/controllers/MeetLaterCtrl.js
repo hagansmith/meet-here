@@ -29,10 +29,10 @@ app.controller("MeetLaterCtrl", function($location, $rootScope, $scope, MapServi
       meet.uid = $rootScope.uid;
     }
       meet.history = true;
-    MapService.saveMeetInfo(meet).then((result)=> {
-      let meetId = result.data.name;
-      MapService.saveMarkerInfo(meet, meetMarkers, meetId);
-      $location.path(`/MeetHere/${meetId}`);
+      MapService.saveMeetInfo(meet).then((result)=> {
+          let meetId = result.data.name;
+          MapService.saveMarkerInfo(meet, meetMarkers, meetId);
+          $location.path(`/MeetHere/${meetId}`);
     }).catch((error) => {
       console.log("error in controller, meetNowDetails", error);
     });
