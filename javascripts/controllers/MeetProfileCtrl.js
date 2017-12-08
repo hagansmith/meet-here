@@ -26,8 +26,11 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapSer
      loadMeetProfile();
    }
 
-   $scope.saveMeet = (meetid) => {
-     console.log(meetid);
+   $scope.saveMeet = (meet) => {
+     meet.saved = true
+     let meetId = meet.marker1.meetid;
+     MapService.updateMeet(meet, meetId);
+     loadMeetProfile();
    }
 
  });
