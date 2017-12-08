@@ -4,10 +4,10 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
 
   const saveMeetInfo = (meet) => {
     let meetObject = {
-      history: meet.history,
-      routeBy: meet.routeBy,
-      uid: meet.uid,
-      where: meet.where
+      "history": meet.history,
+      "routeBy": meet.routeBy,
+      "uid": meet.uid,
+      "where": meet.where
     }
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meetObject));
   };
@@ -15,17 +15,17 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
   const saveMarkerInfo = (meet, meetMarkers, meetId) => {
     console.log(meetMarkers);
     let markerObject1 = {
-      meetid : meetId,
-      address : meet.marker1,
-      lat: meetMarkers.marker1.pos.lat,
-      lng: meetMarkers.marker1.pos.lng
+      "meetid" : meetId,
+      "address" : meet.marker1,
+      "lat": meetMarkers.marker1.pos.lat,
+      "lng": meetMarkers.marker1.pos.lng
     }
 
     let markerObject2 = {
-      meetid : meetId,
-      address : meet.marker2,
-      lat: meetMarkers.marker2.lat,
-      lng: meetMarkers.marker2.lng
+      "meetid" : meetId,
+      "address" : meet.marker2,
+      "lat": meetMarkers.marker2.lat,
+      "lng": meetMarkers.marker2.lng
     }
   return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject1)).then((result) =>{
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject2))
@@ -111,19 +111,29 @@ const getMeetInfoByUid = (userUid) => {
   });
 };
 
+  const updateMeet = (meet, meetId) => {
+    let meetObject = {
+      "history": meet.history,
+      "routeBy": meet.routeBy,
+      "uid": meet.uid,
+      "where": meet.where,
+      "saved": meet.saved
+    };
+      return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
+  };
 
   const getMapByAddressQuery = (address) => {
         return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${MAP_CONFIG}`);
-    };
+  };
 
-const reverseGeocode = (coord) => {
-  return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coord.lat},${coord.lng}&key=${MAP_CONFIG}`);
-};
+  const reverseGeocode = (coord) => {
+    return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coord.lat},${coord.lng}&key=${MAP_CONFIG}`);
+  };
 
-const saveReadableAddressToDataBase = (address) => {
+  const saveReadableAddressToDataBase = (address) => {
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
-}
+  };
 
-  return { getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, reverseGeocode, saveReadableAddressToDataBase, saveMarkerInfo, saveMeetInfo };
+  return { getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, reverseGeocode, saveReadableAddressToDataBase, saveMarkerInfo, saveMeetInfo, updateMeet };
 
 });
