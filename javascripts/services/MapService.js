@@ -8,7 +8,7 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
       "routeBy": meet.routeBy,
       "uid": meet.uid,
       "where": meet.where
-    }
+    };
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meetObject));
   };
 
@@ -19,16 +19,16 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
       "address" : meet.marker1,
       "lat": meetMarkers.marker1.pos.lat,
       "lng": meetMarkers.marker1.pos.lng
-    }
+    };
 
     let markerObject2 = {
       "meetid" : meetId,
       "address" : meet.marker2,
       "lat": meetMarkers.marker2.lat,
       "lng": meetMarkers.marker2.lng
-    }
+    };
   return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject1)).then((result) =>{
-    return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject2))
+    return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject2));
     });
   };
 
@@ -83,7 +83,7 @@ const getAllMapDataForCurrentMeet = (meetId) => {
     }).then((locations)=>{
       let locationArray = [];
       Object.keys(locations).forEach((key)=>{
-        locations[key].id = key
+        locations[key].id = key;
         locationArray.push(locations[key]);
       });
         meetData.location = locationArray[0];

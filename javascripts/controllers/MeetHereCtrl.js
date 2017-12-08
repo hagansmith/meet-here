@@ -2,7 +2,7 @@
 
 app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, MapService){
   $scope.meet = {};
-  userUid = $rootScope.uid
+  userUid = $rootScope.uid;
  const getSingleMeet = () => {
    MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
      $scope.meet=results;
@@ -90,8 +90,8 @@ $scope.saveDetail = (meet) => {
       userUid = result.user.uid;
     });
   } else {
-    meet.saved = true
-    let meetId = $routeParams.id
+    meet.saved = true;
+    let meetId = $routeParams.id;
     MapService.updateMeet(meet, meetId);
 }
 };
