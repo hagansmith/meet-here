@@ -15,7 +15,8 @@ let meetMarkers = {};
         };
         meetMarkers.marker1 = { pos };
         MapService.reverseGeocode(pos).then((result)=> {
-          $scope.currentLocation = result.data.results[0].formatted_address;
+          console.log(result);
+          $scope.meet.marker1 = result.data.results[0].formatted_address;
         });
       });
     }
@@ -45,7 +46,7 @@ let meetMarkers = {};
        // Create the autocomplete object, restricting the search to geographical
        // location types.
       let autocomplete = new google.maps.places.Autocomplete(
-           /** @type {!HTMLInputElement} */(document.getElementById("autocomplete2")),
+           /** @type {!HTMLInputElement} */(document.getElementById("autocomplete")),
            {types: ['geocode']});
 
        // When the user selects an address from the dropdown, populate the address
@@ -57,7 +58,7 @@ let meetMarkers = {};
          let place2 =place.geometry.location.lng()
          meetMarkers.marker2 = {lat: place1, lng:place2};
          var val = place.formatted_address;
-           document.getElementById('autocomplete2').value = val;
+           $scope.meet.marker2 = val;
      }
 
      autocomplete.addListener('place_changed', fillInAddress);
