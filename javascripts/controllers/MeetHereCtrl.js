@@ -1,8 +1,8 @@
 
 
-app.controller("MeetHereCtrl", function($routeParams, $scope, MapService){
+app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, MapService){
   $scope.meet = {};
-
+  userUid = $rootScope.uid
  const getSingleMeet = () => {
    MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
      $scope.meet=results;
@@ -85,7 +85,15 @@ $scope.meetNowDetails = (meet) => {
 };
 
 $scope.saveDetail = (meet) => {
-  console.log("in SaveDetail" , meet);
+  if (!userUid){
+    AuthService.authenticateGoogle().then((result)=>{
+      userUid = result.user.uid;
+    });
+  } else {
+    meet.saved = true
+    let meetId = $routeParams.id
+    MapService.updateMeet(meet, meetId);
+}
 };
 
 });
