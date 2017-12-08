@@ -51,12 +51,12 @@ app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService
        fillInAddress = () => {
            // Get the place details from the autocomplete object.
            var place = autocomplete.getPlace();
-           let place1 = place.geometry.location.lat()
-           let place2 =place.geometry.location.lng()
+           let place1 = place.geometry.location.lat();
+           let place2 =place.geometry.location.lng();
            meetMarkers.marker2 = {lat: place1, lng:place2};
            var val = place.formatted_address;
              $scope.meet.marker2 = val;
-       }
+       };
 
        autocomplete.addListener('place_changed', fillInAddress);
 
@@ -78,7 +78,7 @@ app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService
          }
        };
      });
-    }
+   };
 
     InitAutocomplete();
 

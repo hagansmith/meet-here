@@ -18,19 +18,19 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapSer
    loadMeetProfile();
 
    $scope.viewMeet = (meetId) => {
-     $location.path(`/MeetHere/${meetId}`)
+     $location.path(`/MeetHere/${meetId}`);
    };
 
    $scope.eraseMeet = (meetid) => {
      MapService.deleteMeet(meetid);
      loadMeetProfile();
-   }
+   };
 
    $scope.saveMeet = (meet) => {
-     meet.saved = true
+     meet.saved = true;
      let meetId = meet.marker1.meetid;
      MapService.updateMeet(meet, meetId);
      loadMeetProfile();
-   }
+   };
 
  });
