@@ -122,6 +122,22 @@ const getMeetInfoByUid = (userUid) => {
       return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
   };
 
+
+
+  const deleteMeet = (meetId) => {
+    return $http.delete(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`);
+  };
+
+  const deleteMarkers = (meetId) => {
+    //return $http.delete(`${FIREBASE_CONFIG.databaseURL}/markers.json?orderBy="meetid"&equalTo="${meetId}"`);
+  };
+
+  const deleteLocations = (meetId) => {
+    //return $http.delete(`${FIREBASE_CONFIG.databaseURL}/meetLocations.json?orderBy=meetid&equalTo="${meetId}"`);
+  }
+
+
+
   const getMapByAddressQuery = (address) => {
         return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${MAP_CONFIG}`);
   };
@@ -134,6 +150,6 @@ const getMeetInfoByUid = (userUid) => {
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
   };
 
-  return { getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, reverseGeocode, saveReadableAddressToDataBase, saveMarkerInfo, saveMeetInfo, updateMeet };
+  return { deleteMeet, deleteMarkers, deleteLocations, getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, reverseGeocode, saveReadableAddressToDataBase, saveMarkerInfo, saveMeetInfo, updateMeet };
 
 });
