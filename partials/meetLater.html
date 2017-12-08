@@ -1,7 +1,7 @@
-<div class="text-center" id="meetLater">
-  <div class="container-fluid" id="meetNow">
+  <div class="container-fluid" id="meetLater">
     <div class="jumbotron col-xs-10 col-xs-offset-1">
       <form name="meetLater" validate>
+
       <p>Meet</p>
       <select class="form-control form-group" ng-model="meet.where" required>
         <option value=".25">Closer to Location 1</option>
@@ -21,6 +21,10 @@
 
       <p>Location 2</p>
       <input type="text" id="autocomplete" onFocus="geolocate()" class="form-control form-group" placeholder="Athens, GA"  ng-model="meet.marker2" ng-model-options="{ getterSetter: true }">
+
+      <p>Meet Name</p>
+      <input type="text" id="name" class="form-control form-group" placeholder="(optional) Christmas With Family"  ng-model="meet.name">
+
       <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="meetLaterDetails(meet)">Meet Where</a></button>
     </div>
 

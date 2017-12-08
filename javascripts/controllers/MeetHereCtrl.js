@@ -91,6 +91,7 @@ $scope.saveDetail = (meet) => {
     });
   } else {
     meet.saved = true;
+    console.log("meet at meet here", meet);
     let meetId = $routeParams.id;
     MapService.updateMeet(meet, meetId);
 }
