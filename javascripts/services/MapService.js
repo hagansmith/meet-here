@@ -3,11 +3,13 @@
 app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
 
   const saveMeetInfo = (meet) => {
+    console.log(meet);
     let meetObject = {
       "history": meet.history,
       "routeBy": meet.routeBy,
       "uid": meet.uid,
-      "where": meet.where
+      "where": meet.where,
+      "name": meet.name
     };
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meetObject));
   };
@@ -30,6 +32,14 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
   return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject1)).then((result) =>{
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/markers.json`, JSON.stringify(markerObject2));
     });
+  };
+
+  const saveLocationInfo = (meet, midpoint, meetId) => {
+    let locationObject1 = {
+      "meetid" : meetId,
+      "lat" : midpoint.lat,
+      "lng" : midpoint.lng
+    };
   };
 
   const getCurrentMeet = (meetId) => {
@@ -117,7 +127,8 @@ const getMeetInfoByUid = (userUid) => {
       "routeBy": meet.routeBy,
       "uid": meet.uid,
       "where": meet.where,
-      "saved": meet.saved
+      "saved": meet.saved,
+      "name":meet.name
     };
       return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
   };
@@ -136,10 +147,17 @@ const getMeetInfoByUid = (userUid) => {
     return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coord.lat},${coord.lng}&key=${MAP_CONFIG}`);
   };
 
+  const midPointLocator = (meet) => {
+    console.log("meet infor at midPoint", meet);
+     return GoogleMapsLoader.load(function(google) {
+      google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(),meet.where);
+    });
+  };
+
   const saveReadableAddressToDataBase = (address) => {
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
   };
 
-  return { deleteMeet, getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, reverseGeocode, saveReadableAddressToDataBase, saveMarkerInfo, saveMeetInfo, updateMeet };
+  return { deleteMeet, getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveReadableAddressToDataBase, saveMarkerInfo, saveMeetInfo, updateMeet };
 
 });

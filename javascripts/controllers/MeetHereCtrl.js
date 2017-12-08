@@ -3,6 +3,8 @@
 app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, MapService){
   $scope.meet = {};
   userUid = $rootScope.uid;
+  let midPoint = {};
+  
  const getSingleMeet = () => {
    MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
      $scope.meet=results;
@@ -13,6 +15,8 @@ app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthSe
 };
 getSingleMeet();
 
+
+// use meet coordinates to calculate midpoint coordinates
 const gMaps = (results) => {
   GoogleMapsLoader.load(function(google) {
       var map = new google.maps.Map(document.getElementById('map'), {
@@ -91,6 +95,7 @@ $scope.saveDetail = (meet) => {
     });
   } else {
     meet.saved = true;
+    console.log("meet at meet here", meet);
     let meetId = $routeParams.id;
     MapService.updateMeet(meet, meetId);
 }
