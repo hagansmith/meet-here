@@ -1,6 +1,6 @@
 
 
-app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService){
+app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $scope, MapService){
 
   let meetMarkers = {};
 
@@ -80,9 +80,30 @@ app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService
      });
    };
 
-    InitAutocomplete();
+    const getSingleMeet = () => {
+      MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+        let  formattedresults = {
+          marker1: results.marker1.address,
+          marker2: results.marker2.address,
+          routeBy: results.routeBy,
+          where: results.where,
+          name: results.name,
+          min: results.when
+        };
+      $scope.meet=formattedresults;
+      }).catch((error)=>{
+         console.log("error in getSingleMeet", error);
+       });
+   };
 
+   const editMeet = () => {
+     if (!$routeParams.id) {
+       InitAutocomplete();
+     } else {
+        getSingleMeet();
+     }
+   };
 
-
+   editMeet();
 
 });

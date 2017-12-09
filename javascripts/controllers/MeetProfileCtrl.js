@@ -17,6 +17,14 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapSer
 
    loadMeetProfile();
 
+   $scope.editMeet = (meet, meetId) => {
+     if (!meet.where){
+       $location.path(`/MeetNow/${meetId}`);
+     }else{
+       $location.path(`/MeetLater/${meetId}`);
+     }
+   };
+
    $scope.viewMeet = (meetId) => {
      $location.path(`/MeetHere/${meetId}`);
    };

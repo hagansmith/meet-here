@@ -8,13 +8,13 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
       "routeBy": meet.routeBy,
       "uid": meet.uid,
       "where": meet.where,
-      "name": meet.name
+      "name": meet.name,
+      "when": meet.min
     };
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meetObject));
   };
 
   const saveMarkerInfo = (meet, meetMarkers, meetId) => {
-    console.log(meetMarkers);
     let markerObject1 = {
       "meetid" : meetId,
       "address" : meet.marker1,
@@ -128,7 +128,8 @@ const getMeetInfoByUid = (userUid) => {
       "uid": meet.uid,
       "where": meet.where,
       "saved": meet.saved,
-      "name":meet.name
+      "name":meet.name,
+      "when":meet.min
     };
       return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
   };

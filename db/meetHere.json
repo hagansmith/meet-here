@@ -28,21 +28,25 @@
     "marker1": {
       "lat": 40.714,
       "lng": -74.006,
+      "address": "409 Battle Ave, Franklin, TN 37064, USA",
       "meetid": 1
     },
     "marker2": {
       "lat": 48.857,
       "lng": 2.352,
+      "address": "690 Old Hickory Blvd, Brentwood, TN 37027, USA",
       "meetid": 1
     },
     "marker3": {
       "lat": 35.92,
       "lng": -86.87,
+      "address": "384 Edmondson Pike, Brentwood, TN 37027, USA",
       "meetid": 2
     },
     "marker4": {
       "lat": 33.96,
       "lng": -83.35,
+      "address": "411 Battle Ave, Franklin, TN 37064, USA",
       "meetid": 2
     }
   },
