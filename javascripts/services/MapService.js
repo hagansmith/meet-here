@@ -129,7 +129,7 @@ const getMeetInfoByUid = (userUid) => {
       "where": meet.where,
       "saved": meet.saved,
       "name":meet.name,
-      "when":meet.min
+      "when":meet.when
     };
       return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
   };
@@ -140,7 +140,7 @@ const getMeetInfoByUid = (userUid) => {
     return $http.delete(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`);
   };
 
-  const getMapByAddressQuery = (address) => {
+  const getCoordByAddressQuery = (address) => {
         return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${MAP_CONFIG}`);
   };
 
@@ -156,6 +156,47 @@ const getMeetInfoByUid = (userUid) => {
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
   };
 
-  return { deleteMeet, getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveReadableAddressToDataBase, saveLocationInfo, saveMarkerInfo, saveMeetInfo, updateMeet };
+  const editMeetInfo = (meet, meetId) => {
+    console.log("meet edit info", meet);
+    if (!meet) {
+      console.log("no change");
+      return;
+    } else {
+    let meetObject = {
+      "where": meet.where,
+      "name": meet.name,
+      "when": meet.min
+    };
+    return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
+  }
+  };
+
+  const editMarkerInfo = (originalMeet, meetMarkers) => {
+    marker1 = originalMeet.marker1.id;
+    marker2 = originalMeet.marker2.id;
+      console.log("original meet", originalMeet);
+      console.log("markers", meetMarkers);
+    if (meetMarkers.marker1) {
+    let markerObject1 = {
+      "address" : meetMarkers.marker1.address,
+      "lat": meetMarkers.marker1.pos.lat,
+      "lng": meetMarkers.marker1.pos.lng
+    };
+  } else { return; }
+
+    if (meetMarkers.marker2) {
+    let markerObject2 = {
+      "address" : meet.marker2,
+      "lat": meetMarkers.marker2.lat,
+      "lng": meetMarkers.marker2.lng
+    };
+  } else { return; }
+
+    return $http.put(`${FIREBASE_CONFIG.databaseURL}/markers/${marker1}.json`, JSON.stringify(markerObject1)).then((result) =>{
+    return $http.put(`${FIREBASE_CONFIG.databaseURL}/markers/${marker2}.json`, JSON.stringify(markerObject2));
+    });
+  };
+
+  return { deleteMeet,  editMeetInfo, editMarkerInfo, getCoordByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveReadableAddressToDataBase, saveLocationInfo, saveMarkerInfo, saveMeetInfo, updateMeet };
 
 });

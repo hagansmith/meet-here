@@ -2,7 +2,7 @@
   "users": {
     "user1": {
       "name":"Adam Smith",
-      "uid":"dpFYNMJx3DfQChEHANaXmvx28E83"
+      "uid":"c0Mc4LvvGWTiqAzrlBQLK2Iwrh43"
     },
     "user2":{
       "name":"Test User",
@@ -12,7 +12,7 @@
   "meets": {
     "meet1": {
       "name": "My First Meet",
-      "uid":"dpFYNMJx3DfQChEHANaXmvx28E83",
+      "uid":"c0Mc4LvvGWTiqAzrlBQLK2Iwrh43",
       "saved":false,
       "history":true
     },

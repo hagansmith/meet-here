@@ -91,6 +91,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
         name: results.name,
       };
     $scope.meet=formattedresults;
+     InitAutocomplete();
    }).catch((error)=>{
       console.log("error in getSingleMeet", error);
     });
