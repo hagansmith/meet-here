@@ -3,7 +3,6 @@
 app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
 
   const saveMeetInfo = (meet) => {
-    console.log(meet);
     let meetObject = {
       "history": meet.history,
       "routeBy": meet.routeBy,
@@ -34,12 +33,13 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
     });
   };
 
-  const saveLocationInfo = (meet, midpoint, meetId) => {
-    let locationObject1 = {
+  const saveLocationInfo = (midpoint, meetId) => {
+    let locationObject = {
       "meetid" : meetId,
-      "lat" : midpoint.lat,
-      "lng" : midpoint.lng
+      "lat" : midpoint.lat(),
+      "lng" : midpoint.lng()
     };
+    return $http.post(`${FIREBASE_CONFIG.databaseURL}/meetLocations.json`, JSON.stringify(locationObject));
   };
 
   const getCurrentMeet = (meetId) => {
@@ -148,16 +148,13 @@ const getMeetInfoByUid = (userUid) => {
   };
 
   const midPointLocator = (meet) => {
-    console.log("meet infor at midPoint", meet);
-     return GoogleMapsLoader.load(function(google) {
-      google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(),meet.where);
-    });
+    console.log("meet info at midPoint", meet);
   };
 
   const saveReadableAddressToDataBase = (address) => {
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
   };
 
-  return { deleteMeet, getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveReadableAddressToDataBase, saveMarkerInfo, saveMeetInfo, updateMeet };
+  return { deleteMeet, getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveReadableAddressToDataBase, saveLocationInfo, saveMarkerInfo, saveMeetInfo, updateMeet };
 
 });

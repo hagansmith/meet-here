@@ -4,11 +4,11 @@ app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthSe
   $scope.meet = {};
   userUid = $rootScope.uid;
   let midPoint = {};
-  
+
  const getSingleMeet = () => {
    MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
      $scope.meet=results;
-     gMaps(results);
+     return gMaps(results);
    }).catch((error)=>{
       console.log("error in getSingleMeet", error);
     });
@@ -95,9 +95,9 @@ $scope.saveDetail = (meet) => {
     });
   } else {
     meet.saved = true;
-    console.log("meet at meet here", meet);
     let meetId = $routeParams.id;
     MapService.updateMeet(meet, meetId);
+    MapService.saveLocationInfo(midPoint, meetId);
 }
 };
 
