@@ -114,7 +114,6 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
           "id":results.marker2.id
         },
       };
-      console.log("meet at load", formattedresults);
        InitAutocomplete();
       }).catch((error)=>{
          console.log("error in getSingleMeet", error);
@@ -134,8 +133,9 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
    // Update meet details
    $scope.updateMeetNowDetails = (meet) => {
       meetId = $routeParams.id;
-     MapService.editMeetInfo(meet, meetId);
-     MapService.editMarkerInfo(originalMeet, newMeet);
+     MapService.editMeetInfo(meet, meetId, originalMeet);
+     MapService.editMarkerInfo1(meet, originalMeet, newMeet);
+     MapService.editMarkerInfo2(meet, originalMeet, newMeet);
      $location.path(`/MeetHere/${meetId}`);
    };
 
