@@ -1,8 +1,8 @@
 
 
-app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, MapService){
+app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
   $scope.meet = {};
-  userUid = $rootScope.uid;
+  let userUid = $rootScope.uid;
   let midPoint = {};
 
  const getSingleMeet = () => {
@@ -27,13 +27,13 @@ const gMaps = (results) => {
       map.controls[google.maps.ControlPosition.TOP_CENTER].push(
           document.getElementById('info'));
 
-      marker1 = new google.maps.Marker({
+      let marker1 = new google.maps.Marker({
         map: map,
         draggable: true,
         position: {lat: results.marker1.lat, lng: results.marker1.lng}
       });
 
-      marker2 = new google.maps.Marker({
+      let marker2 = new google.maps.Marker({
         map: map,
         draggable: true,
         position: {lat: results.marker2.lat, lng: results.marker2.lng}
@@ -41,7 +41,7 @@ const gMaps = (results) => {
 
       midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(),".5");
 
-      marker3 = new google.maps.Marker({
+      let marker3 = new google.maps.Marker({
         map: map,
         draggable: true,
         position:{lat: midPoint.lat(), lng: midPoint.lng()}
@@ -54,7 +54,7 @@ const gMaps = (results) => {
       google.maps.event.addListener(marker1, 'position_changed', update);
       google.maps.event.addListener(marker2, 'position_changed', update);
 
-      poly = new google.maps.Polyline({
+      let poly = new google.maps.Polyline({
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
         strokeWeight: 3,
@@ -96,8 +96,8 @@ $scope.saveDetail = (meet) => {
   } else {
     meet.saved = true;
     let meetId = $routeParams.id;
-    MapService.updateMeet(meet, meetId, userUid);
-    MapService.saveLocationInfo(midPoint, meetId);
+    MeetService.updateMeet(meet, meetId, userUid);
+    LocationService.saveLocationInfo(midPoint, meetId);
 }
 };
 
