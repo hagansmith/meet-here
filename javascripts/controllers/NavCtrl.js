@@ -1,4 +1,4 @@
-"use strict";
+
 
 app.controller("NavCtrl", function($location, $rootScope, $scope, $window, AuthService){
   $scope.logoutUser = () => {

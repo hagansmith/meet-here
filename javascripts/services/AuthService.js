@@ -1,4 +1,4 @@
-"use strict";
+
 
 app.service("AuthService", function(){
   const authenticateGoogle = () => {

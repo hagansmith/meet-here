@@ -1,4 +1,4 @@
-"use strict";
+
 
 app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService){
    $scope.meets = {};

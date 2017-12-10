@@ -1,8 +1,11 @@
-"use strict";
 
-app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $scope, MapService){
 
+app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $scope, GoogleCurrentLocationService, MeetService, MarkerService, MapService){
+
+ $scope.meet ={};
   let meetMarkers = {};
+  let originalMeet;
+  let newMeet = {};
 
 // use current location to fill in address
   $scope.useCurrentLocation = () => {
@@ -13,8 +16,10 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
           lng: position.coords.longitude
         };
         meetMarkers.marker1 = { pos };
+        newMeet = {"marker1":{lat : pos.lat, lng : pos.lng}};
         MapService.reverseGeocode(pos).then((result)=> {
-          $scope.meet.marker1 = result.data.results[0].formatted_address;
+           $scope.meet.marker1 = result.data.results[0].formatted_address;
+           newMeet.marker1.address = result.data.results[0].formatted_address;
         });
       });
     }
@@ -29,9 +34,9 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
       meet.uid = $rootScope.uid;
     }
       meet.history = true;
-      MapService.saveMeetInfo(meet).then((result)=> {
+      MeetService.saveMeetInfo(meet).then((result)=> {
           let meetId = result.data.name;
-          MapService.saveMarkerInfo(meet, meetMarkers, meetId);
+          MarkerService.saveMarkerInfo(meet, meetMarkers, meetId);
           $location.path(`/MeetHere/${meetId}`);
     }).catch((error) => {
       console.log("error in controller, meetNowDetails", error);
@@ -39,7 +44,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
   };
 
 // Autocomplete address
-    const InitAutocomplete = () => {
+  const InitAutocomplete = () => {
       GoogleMapsLoader.load(function(google) {
        // Create the autocomplete object, restricting the search to geographical
        // location types.
@@ -63,7 +68,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
 
      // Bias the autocomplete object to the user's geographical location,
      // as supplied by the browser's 'navigator.geolocation' object.
-    const geolocate = () => {
+     const geolocate = () => {
        if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(function(position) {
            var geolocation = {

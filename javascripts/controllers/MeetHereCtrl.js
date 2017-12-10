@@ -1,6 +1,6 @@
-"use strict";
 
-app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, MapService){
+
+app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
   $scope.meet = {};
   let userUid = $rootScope.uid;
   let midPoint = {};
@@ -96,8 +96,8 @@ $scope.saveDetail = (meet) => {
   } else {
     meet.saved = true;
     let meetId = $routeParams.id;
-    MapService.updateMeet(meet, meetId, userUid);
-    MapService.saveLocationInfo(midPoint, meetId);
+    MeetService.updateMeet(meet, meetId, userUid);
+    LocationService.saveLocationInfo(midPoint, meetId);
 }
 };
 
