@@ -3,7 +3,7 @@
       <h1>Meet Here</h1>
      <div id="map"></div>
      <div id="meetDetails" >
-       <h3>Chatanooga, TN</h3>
+       <h3>{{meet.location}}</h3>
        <p> You are coming from {{meet.marker1.address}} and you are meeting someone coming from {{meet.marker2.address}}. You are meeting in the middle based on distance and it will take you both 2 hours.</p>
      </div>
      <button type="submit" class="btn btn-default  col-xs-3 col-xs-offset-3" ng-click="meetNowDetails(meet)">Change Meet</a></button>

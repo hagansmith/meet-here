@@ -1,13 +1,13 @@
 
 
-app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService){
+app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService, MeetService){
    $scope.meets = {};
 
    const loadMeetProfile = ( ) => {
      if (!$rootScope.uid) {
        console.log("umm login");
      } else {
-       MapService.getMeetInfoByUid($rootScope.uid).then((results) => {
+       MeetService.getMeetInfoByUid($rootScope.uid).then((results) => {
           $scope.meets = results;
        }).catch((err)=>{
          console.log("error in meet profile controller loadMeetProfile", err);
@@ -30,14 +30,14 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapSer
    };
 
    $scope.eraseMeet = (meetid) => {
-     MapService.deleteMeet(meetid);
+     MeetService.deleteMeet(meetid);
      loadMeetProfile();
    };
 
    $scope.saveMeet = (meet) => {
      meet.saved = true;
      let meetId = meet.marker1.meetid;
-     MapService.updateMeet(meet, meetId);
+     MeetService.updateMeet(meet, meetId);
      loadMeetProfile();
    };
 
