@@ -1,12 +1,11 @@
 
 
-app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $scope, MapService){
+app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $scope, MeetService, MarkerService, MapService){
 
   $scope.meet ={};
   let meetMarkers = {};
   let originalMeet;
   let newMeet = {};
-  let autocomplete;
 
   // use current location to fill in address
     $scope.useCurrentLocation = () => {
@@ -28,6 +27,7 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
 
   // Save meet details
   $scope.meetNowDetails = (meet) => {
+    // check for a user uid if no id then assign id of randomUid
     if (!$rootScope.uid) {
       meet.uid = "noUid";
     } else {

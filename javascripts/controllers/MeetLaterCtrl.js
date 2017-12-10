@@ -1,6 +1,6 @@
 
 
-app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $scope, GoogleCurrentLocationService, MeetService, MarkerService, MapService){
+app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $scope, MeetService, MarkerService, MapService){
 
  $scope.meet ={};
   let meetMarkers = {};
