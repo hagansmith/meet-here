@@ -68,7 +68,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
 
      // Bias the autocomplete object to the user's geographical location,
      // as supplied by the browser's 'navigator.geolocation' object.
-     const geolocate = () => {
+     geolocate = () => {
        if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(function(position) {
            var geolocation = {

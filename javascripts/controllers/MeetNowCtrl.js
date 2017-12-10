@@ -34,9 +34,9 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
       meet.uid = $rootScope.uid;
     }
     meet.history = true;
-    MapService.saveMeetInfo(meet).then((result)=> {
+    MeetService.saveMeetInfo(meet).then((result)=> {
       let meetId = result.data.name;
-      MapService.saveMarkerInfo(meet, meetMarkers, meetId);
+      MarkerService.saveMarkerInfo(meet, meetMarkers, meetId);
       $location.path(`/MeetHere/${meetId}`);
     }).catch((error) => {
       console.log("error in controller, meetNowDetails", error);
@@ -44,7 +44,7 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
   };
 
   // Autocomplete address
-  let InitAutocomplete = () => {
+  const InitAutocomplete = () => {
     GoogleMapsLoader.load(function(google) {
       // Create the autocomplete object, restricting the search to geographical
       // location types.
@@ -87,7 +87,7 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
   };
 
     const getSingleMeet = () => {
-      MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+      MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
         console.log("original meet results", results);
         originalMeet = results;
         // Create a formatted object for use by ng-model. This format is required to make the data match the original form
@@ -134,9 +134,9 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
    // Update meet details
    $scope.updateMeetNowDetails = (meet) => {
       let meetId = $routeParams.id;
-     MapService.editMeetInfo(meet, meetId, originalMeet);
-     MapService.editMarkerInfo1(meet, originalMeet, newMeet);
-     MapService.editMarkerInfo2(meet, originalMeet, newMeet);
+     MeetService.editMeetInfo(meet, meetId, originalMeet);
+     MarkerService.editMarkerInfo1(meet, originalMeet, newMeet);
+     MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
      $location.path(`/MeetHere/${meetId}`);
    };
 
