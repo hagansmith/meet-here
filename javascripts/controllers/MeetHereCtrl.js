@@ -6,7 +6,7 @@ app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthSe
   let midPoint = {};
 
  const getSingleMeet = () => {
-   MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+   MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
      $scope.meet=results;
      return gMaps(results);
    }).catch((error)=>{
