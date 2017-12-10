@@ -1,4 +1,4 @@
-
+"use strict";
 
 app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
 
@@ -152,9 +152,9 @@ const getMeetInfoByUid = (userUid) => {
     console.log("meet info at midPoint", meet);
   };
 
-  const saveReadableAddressToDataBase = (address) => {
-    return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
-  };
+  // const saveReadableAddressToDataBase = (address) => {
+  //   return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
+  // };
 
   const editMeetInfo = (meet, meetId, originalMeet) => {
     if (!meet) {
@@ -174,7 +174,7 @@ const getMeetInfoByUid = (userUid) => {
   };
 
   const editMarkerInfo1 = (meet, originalMeet, meetMarkers) => {
-    marker1 = originalMeet.marker1.id;
+    let marker1 = originalMeet.marker1.id;
     if (!meetMarkers.marker1) {
       return;
     } else {
@@ -189,7 +189,7 @@ const getMeetInfoByUid = (userUid) => {
   };
 
   const editMarkerInfo2 = (meet, originalMeet, meetMarkers) => {
-    marker2 = originalMeet.marker2.id;
+    let marker2 = originalMeet.marker2.id;
     if (!meetMarkers.marker2) {
       return;
     } else {
@@ -203,6 +203,6 @@ const getMeetInfoByUid = (userUid) => {
   }
 };
 
-  return { deleteMeet,  editMeetInfo, editMarkerInfo1, editMarkerInfo2, getCoordByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveReadableAddressToDataBase, saveLocationInfo, saveMarkerInfo, saveMeetInfo, updateMeet };
+  return { deleteMeet,  editMeetInfo, editMarkerInfo1, editMarkerInfo2, getCoordByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveLocationInfo, saveMarkerInfo, saveMeetInfo, updateMeet };
 
 });

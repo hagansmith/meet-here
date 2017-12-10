@@ -1,4 +1,4 @@
-
+"use strict";
 
 app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $scope, MapService){
 
@@ -39,7 +39,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
   };
 
 // Autocomplete address
-    InitAutocomplete = () => {
+    const InitAutocomplete = () => {
       GoogleMapsLoader.load(function(google) {
        // Create the autocomplete object, restricting the search to geographical
        // location types.
@@ -49,7 +49,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
 
        // When the user selects an address from the dropdown, populate the address
        // fields in the form.
-     fillInAddress = () => {
+    const  fillInAddress = () => {
          // Get the place details from the autocomplete object.
          var place = autocomplete.getPlace();
          let place1 = place.geometry.location.lat();
@@ -63,7 +63,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
 
      // Bias the autocomplete object to the user's geographical location,
      // as supplied by the browser's 'navigator.geolocation' object.
-    geolocate = () => {
+    const geolocate = () => {
        if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(function(position) {
            var geolocation = {

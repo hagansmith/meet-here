@@ -1,4 +1,4 @@
-
+"use strict";
 
 app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $scope, MapService){
 
@@ -42,7 +42,7 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
   };
 
   // Autocomplete address
-      InitAutocomplete = () => {
+  const  InitAutocomplete = () => {
         GoogleMapsLoader.load(function(google) {
          // Create the autocomplete object, restricting the search to geographical
          // location types.
@@ -52,7 +52,7 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
 
          // When the user selects an address from the dropdown, populate the address
          // fields in the form.
-       fillInAddress = () => {
+       const fillInAddress = () => {
            // Get the place details from the autocomplete object.
            var place = autocomplete.getPlace();
            let place1 = place.geometry.location.lat();
@@ -67,7 +67,7 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
 
        // Bias the autocomplete object to the user's geographical location,
        // as supplied by the browser's 'navigator.geolocation' object.
-      geolocate = () => {
+      const geolocate = () => {
          if (navigator.geolocation) {
            navigator.geolocation.getCurrentPosition(function(position) {
              var geolocation = {
@@ -132,7 +132,7 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
 
    // Update meet details
    $scope.updateMeetNowDetails = (meet) => {
-      meetId = $routeParams.id;
+      let meetId = $routeParams.id;
      MapService.editMeetInfo(meet, meetId, originalMeet);
      MapService.editMarkerInfo1(meet, originalMeet, newMeet);
      MapService.editMarkerInfo2(meet, originalMeet, newMeet);

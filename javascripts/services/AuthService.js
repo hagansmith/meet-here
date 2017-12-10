@@ -1,3 +1,5 @@
+"use strict";
+
 app.service("AuthService", function(){
   const authenticateGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
