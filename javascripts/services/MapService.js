@@ -8,13 +8,13 @@ app.service("MapService", function ($http, $q, FIREBASE_CONFIG, MAP_CONFIG){
       "routeBy": meet.routeBy,
       "uid": meet.uid,
       "where": meet.where,
-      "name": meet.name
+      "name": meet.name,
+      "when": meet.min
     };
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meetObject));
   };
 
   const saveMarkerInfo = (meet, meetMarkers, meetId) => {
-    console.log(meetMarkers);
     let markerObject1 = {
       "meetid" : meetId,
       "address" : meet.marker1,
@@ -121,14 +121,15 @@ const getMeetInfoByUid = (userUid) => {
   });
 };
 
-  const updateMeet = (meet, meetId) => {
+  const updateMeet = (meet, meetId, userUid) => {
     let meetObject = {
       "history": meet.history,
       "routeBy": meet.routeBy,
-      "uid": meet.uid,
+      "uid": userUid,
       "where": meet.where,
       "saved": meet.saved,
-      "name":meet.name
+      "name":meet.name,
+      "when":meet.when
     };
       return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
   };
@@ -139,7 +140,7 @@ const getMeetInfoByUid = (userUid) => {
     return $http.delete(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`);
   };
 
-  const getMapByAddressQuery = (address) => {
+  const getCoordByAddressQuery = (address) => {
         return $http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${MAP_CONFIG}`);
   };
 
@@ -155,6 +156,53 @@ const getMeetInfoByUid = (userUid) => {
     return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meet));
   };
 
-  return { deleteMeet, getMapByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveReadableAddressToDataBase, saveLocationInfo, saveMarkerInfo, saveMeetInfo, updateMeet };
+  const editMeetInfo = (meet, meetId, originalMeet) => {
+    if (!meet) {
+      console.log("no change");
+      return;
+    } else {
+    let meetObject = {
+      "where": meet.where,
+      "name": meet.name,
+      "when": meet.min,
+      "saved": originalMeet.saved,
+      "history": originalMeet.history,
+      "uid": originalMeet.uid
+    };
+    return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
+  }
+  };
+
+  const editMarkerInfo1 = (meet, originalMeet, meetMarkers) => {
+    marker1 = originalMeet.marker1.id;
+    if (!meetMarkers.marker1) {
+      return;
+    } else {
+      let markerObject1 = {
+        "address" : meet.marker1,
+        "lat": meetMarkers.marker1.lat,
+        "lng": meetMarkers.marker1.lng,
+        "meetid": originalMeet.marker1.meetid
+    };
+      return $http.put(`${FIREBASE_CONFIG.databaseURL}/markers/${marker1}.json`, JSON.stringify(markerObject1));
+  }
+  };
+
+  const editMarkerInfo2 = (meet, originalMeet, meetMarkers) => {
+    marker2 = originalMeet.marker2.id;
+    if (!meetMarkers.marker2) {
+      return;
+    } else {
+      let markerObject2 = {
+        "address" : meet.marker2,
+        "lat": meetMarkers.marker2.lat,
+        "lng": meetMarkers.marker2.lng,
+        "meetid": originalMeet.marker2.meetid
+    };
+      return $http.put(`${FIREBASE_CONFIG.databaseURL}/markers/${marker2}.json`, JSON.stringify(markerObject2));
+  }
+};
+
+  return { deleteMeet,  editMeetInfo, editMarkerInfo1, editMarkerInfo2, getCoordByAddressQuery, getAllMapDataForCurrentMeet, getMeetInfoByUid, midPointLocator, reverseGeocode, saveReadableAddressToDataBase, saveLocationInfo, saveMarkerInfo, saveMeetInfo, updateMeet };
 
 });

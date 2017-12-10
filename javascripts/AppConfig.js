@@ -52,7 +52,17 @@ app.config(function( $locationProvider, $routeProvider ){
       controller: 'MeetNowCtrl'
 
     } )
+    .when("/MeetNow/:id", {
+      templateUrl: 'partials/meetNow.html',
+      controller: 'MeetNowCtrl'
+
+    } )
     .when("/MeetLater", {
+      templateUrl: 'partials/meetLater.html',
+      controller: 'MeetLaterCtrl'
+
+    } )
+    .when("/MeetLater/:id", {
       templateUrl: 'partials/meetLater.html',
       controller: 'MeetLaterCtrl'
 

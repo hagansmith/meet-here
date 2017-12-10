@@ -1,8 +1,10 @@
 
 
-app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService){
+app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $scope, MapService){
 
   let meetMarkers = {};
+  let originalMeet;
+  let newMeet = {};
 
   // use current location to fill in address
     $scope.useCurrentLocation = () => {
@@ -13,8 +15,10 @@ app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService
             lng: position.coords.longitude
           };
           meetMarkers.marker1 = { pos };
+          newMeet = {"marker1":{lat : pos.lat, lng : pos.lng}};
           MapService.reverseGeocode(pos).then((result)=> {
             $scope.meet.marker1 = result.data.results[0].formatted_address;
+            newMeet.marker1.address = result.data.results[0].formatted_address;
           });
         });
       }
@@ -54,6 +58,7 @@ app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService
            let place1 = place.geometry.location.lat();
            let place2 =place.geometry.location.lng();
            meetMarkers.marker2 = {lat: place1, lng:place2};
+          newMeet.marker2 = {lat: place1, lng:place2};
            var val = place.formatted_address;
              $scope.meet.marker2 = val;
        };
@@ -80,9 +85,58 @@ app.controller("MeetNowCtrl", function($location, $rootScope, $scope, MapService
      });
    };
 
-    InitAutocomplete();
+    const getSingleMeet = () => {
+      MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+        console.log("original meet results", results);
+        originalMeet = results;
+        // Create a formatted object for use by ng-model. This format is required to make the data match the original form
+        let  formattedresults = {
+          "marker1": results.marker1.address,
+          "marker2": results.marker2.address,
+          "routeBy": results.routeBy,
+          "where": results.where,
+          "name": results.name,
+          "min": results.when,
+          "edit":true
+        };
+      $scope.meet=formattedresults;
+      meetMarkers = {
+        marker1: {
+          "address": results.marker1.address,
+          "lat": results.marker1.lat,
+          "lng": results.marker1.lng,
+          "id": results.marker1.id
+        },
+        marker2: {
+          "address":results.marker2.address,
+          "lat":results.marker1.lat,
+          "lng":results.marker1.lng,
+          "id":results.marker2.id
+        },
+      };
+       InitAutocomplete();
+      }).catch((error)=>{
+         console.log("error in getSingleMeet", error);
+       });
+   };
 
+   const editMeet = () => {
+     if (!$routeParams.id) {
+       InitAutocomplete();
+     } else {
+        getSingleMeet();
+     }
+   };
 
+   editMeet();
 
+   // Update meet details
+   $scope.updateMeetNowDetails = (meet) => {
+      meetId = $routeParams.id;
+     MapService.editMeetInfo(meet, meetId, originalMeet);
+     MapService.editMarkerInfo1(meet, originalMeet, newMeet);
+     MapService.editMarkerInfo2(meet, originalMeet, newMeet);
+     $location.path(`/MeetHere/${meetId}`);
+   };
 
 });
