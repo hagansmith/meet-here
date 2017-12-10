@@ -6,7 +6,7 @@ app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthSe
   let midPoint = {};
 
  const getSingleMeet = () => {
-   MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+   MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
      $scope.meet=results;
      return gMaps(results);
    }).catch((error)=>{
@@ -21,7 +21,7 @@ const gMaps = (results) => {
   GoogleMapsLoader.load(function(google) {
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
-        center: {lat: -34.397, lng: 150.644},
+        center: {lat: 41.850033, lng: -87.6500523},
       });
 
       map.controls[google.maps.ControlPosition.TOP_CENTER].push(
