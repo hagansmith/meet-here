@@ -2,7 +2,7 @@
 
 app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $scope, MeetService, MarkerService, MapService){
 
-  $scope.meet ={};
+  //$scope.meet ={};
   let meetMarkers = {};
   let originalMeet;
   let newMeet = {};
@@ -88,7 +88,6 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
 
     const getSingleMeet = () => {
       MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
-        console.log("original meet results", results);
         originalMeet = results;
         // Create a formatted object for use by ng-model. This format is required to make the data match the original form
         let  formattedresults = {
@@ -133,10 +132,15 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
 
    // Update meet details
    $scope.updateMeetNowDetails = (meet) => {
-      let meetId = $routeParams.id;
-     MeetService.editMeetInfo(meet, meetId, originalMeet);
+      $scope.meet = meet;
+     MeetService.editMeetInfo(meet, originalMeet);
+     if (meet.marker1) {
      MarkerService.editMarkerInfo1(meet, originalMeet, newMeet);
-     MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
+    }
+    if (meet.marker2) {
+        MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
+     }
+       meetId = originalMeet.location.meetid;
      $location.path(`/MeetHere/${meetId}`);
    };
 

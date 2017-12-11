@@ -41,7 +41,7 @@ const getCurrentMeet = (meetId) => {
 });
 };
 
-const editMeetInfo = (meet, meetId, originalMeet) => {
+const editMeetInfo = (meet, originalMeet) => {
   if (!meet) {
     console.log("no change");
     return;
@@ -54,6 +54,8 @@ const editMeetInfo = (meet, meetId, originalMeet) => {
     "history": originalMeet.history,
     "uid": originalMeet.uid
   };
+  console.log("original meet", originalMeet);
+  let meetId = originalMeet.location.meetid;
   return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
 }
 };

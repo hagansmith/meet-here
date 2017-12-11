@@ -14,10 +14,10 @@
     <div id="savedMeets" class="col-xs-12">
       <h4> Saved Meets </h4>
         <div id="meet" class="col-xs-12" ng-repeat="meet in meets" ng-show="meet.saved" >
-          <div class = "col-xs-12" ng-click = "viewMeet(meet.marker1.meetid)">
-            <a class="col-xs-1"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a><p class="col-xs-3">{{meet.name}}<p>
+          <div class = "col-xs-12">
+            <a class="col-xs-1" ng-click = "viewMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a><p class="col-xs-3">{{meet.name}}<p>
             <p class="col-xs-5">{{meet.location.address}}</p>
-            <a class="edit col-xs-1" ng-click = "editMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-edit " aria-hidden="true"></span></a>
+            <a class="edit col-xs-1" ng-click = "editMeet(meet)"><span class="glyphicon glyphicon-edit " aria-hidden="true"></span></a>
             <a class="erase col-xs-1" ng-click = "eraseMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span></a>
           </div>
           <div class = "col-xs-12">
