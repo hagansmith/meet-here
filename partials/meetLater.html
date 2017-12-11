@@ -25,7 +25,8 @@
       <p>Meet Name</p>
       <input type="text" id="name" class="form-control form-group" placeholder="(optional) Christmas With Family"  ng-model="meet.name">
 
-      <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="meetLaterDetails(meet)">Meet Where</a></button>
+      <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="meetLaterDetails(meet)" ng-hide="meet.edit">Meet Where</a></button>
+      <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="updateMeetLaterDetails(meet)" ng-show="meet.edit">Update Where</a></button>
     </div>
 
   </div>

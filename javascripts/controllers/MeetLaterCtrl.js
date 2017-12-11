@@ -2,7 +2,7 @@
 
 app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $scope, MeetService, MarkerService, MapService){
 
- $scope.meet ={};
+ //$scope.meet ={};
   let meetMarkers = {};
   let originalMeet;
   let newMeet = {};
@@ -87,16 +87,34 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
  };
 
  const getSingleMeet = () => {
-   MapService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
-      let  formattedresults = {
-        marker1: results.marker1.address,
-        marker2: results.marker2.address,
-        routeBy: results.routeBy,
-        where: results.where,
-        name: results.name,
-      };
-    $scope.meet=formattedresults;
-     InitAutocomplete();
+   MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+     originalMeet = results;
+     // Create a formatted object for use by ng-model. This format is required to make the data match the original form
+     let  formattedresults = {
+       "marker1": results.marker1.address,
+       "marker2": results.marker2.address,
+       "routeBy": results.routeBy,
+       "where": results.where,
+       "name": results.name,
+       "min": results.when,
+       "edit":true
+     };
+   $scope.meet=formattedresults;
+   meetMarkers = {
+     marker1: {
+       "address": results.marker1.address,
+       "lat": results.marker1.lat,
+       "lng": results.marker1.lng,
+       "id": results.marker1.id
+     },
+     marker2: {
+       "address":results.marker2.address,
+       "lat":results.marker1.lat,
+       "lng":results.marker1.lng,
+       "id":results.marker2.id
+     },
+   };
+    InitAutocomplete();
    }).catch((error)=>{
       console.log("error in getSingleMeet", error);
     });
@@ -111,5 +129,19 @@ const editMeet = () => {
 };
 
 editMeet();
+
+// Update meet details
+$scope.updateMeetLaterDetails = (meet) => {
+   $scope.meet = meet;
+  MeetService.editMeetInfo(meet, originalMeet);
+  if (meet.marker1) {
+  MarkerService.editMarkerInfo1(meet, originalMeet, newMeet);
+ }
+ if (meet.marker2) {
+     MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
+  }
+    meetId = originalMeet.location.meetid;
+  $location.path(`/MeetHere/${meetId}`);
+};
 
 });
