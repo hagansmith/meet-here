@@ -1,5 +1,7 @@
 <div class="" id="meetProfile">
   <div class="jumbotron col-xs-10 col-xs-offset-1">
+    <div id="notLoggedIn"class="text-center" ng-show="!navbar"><h3>You must <a ng-controller="AuthCtrl" ng-href="#" ng-click="authenticate()">sign in</a> to meet</div>
+    <div id="loggedin" ng-show="navbar">
     <h2>Meets</h2>
     <div id="searchHistory" class="col-xs-12">
       <h4> Search History </h4>
@@ -22,9 +24,9 @@
           </div>
           <div class = "col-xs-12">
             <h5 class="col-xs-12"> {{meet.marker1.address}} | {{meet.marker2.address}}</h5>
-
           </div>
+        </div>
+      </div>
       </div>
     </div>
   </div>
-</div>

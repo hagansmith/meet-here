@@ -5,7 +5,7 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapSer
 
    const loadMeetProfile = ( ) => {
      if (!$rootScope.uid) {
-       console.log("umm login");
+       AuthCtrl.authenticate();
      } else {
        MeetService.getMeetInfoByUid($rootScope.uid).then((results) => {
           $scope.meets = results;
@@ -18,7 +18,7 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapSer
    loadMeetProfile();
 
    $scope.editMeet = (meet) => {
-    let meetId =  meet.location.meetid;
+    let meetId =  meet.marker1.meetid;
      if (!meet.where){
        $location.path(`/MeetNow/${meetId}`);
      }else{
