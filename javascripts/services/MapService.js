@@ -15,9 +15,14 @@ const placeSearch = (coord, type) => {
 };
 
 const placeDetail = (placeID) => {
-  return $http.get (`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeID}=${MAP_CONFIG}`);
+  return $http.get (`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeID}&key=${MAP_CONFIG}`);
 };
 
-  return { getCoordByAddressQuery, reverseGeocode, placeSearch, placeDetail};
+const directions = (place) => {
+  console.log("place in directions", place);
+//return $http.get (`https://maps.googleapis.com/maps/api/directions/json?origin=${marker1}&destination=${marker1}&departure_time=${departure_time}&traffic_model=best_guess&key=${MAP_CONFIG}`);
+};
+
+  return { directions, getCoordByAddressQuery, reverseGeocode, placeSearch, placeDetail};
 
 });

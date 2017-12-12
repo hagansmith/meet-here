@@ -1,6 +1,6 @@
 
 
-app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
+app.controller("MeetHereCtrl", function($q, $rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
   $scope.meet = {};
   let userUid = $rootScope.uid;
   let midPoint = {};
@@ -8,6 +8,7 @@ app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthSe
  const getSingleMeet = () => {
    MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
      $scope.meet=results;
+     MapService.directions(results);
      return gMaps(results);
    }).catch((error)=>{
       console.log("error in getSingleMeet", error);
