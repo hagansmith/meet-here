@@ -14,7 +14,6 @@ app.controller("MeetHereCtrl", function($q, $rootScope, $routeParams, $scope, Au
          gMaps(results).then(()=> {
            let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
            return MapService.reverseGeocode(middy).then((address) => {
-             console.log($scope.meet);
              $scope.meetAddress = address.data.results[0].formatted_address;
            });
 
@@ -85,7 +84,7 @@ const gMaps = (results) => {
       // });
 
       //update();
-      console.log(midPoint);
+
       resolve (midPoint);
 
     function update() {
@@ -111,7 +110,7 @@ $scope.saveDetail = (meet) => {
     meet.saved = true;
     let meetId = $routeParams.id;
     MeetService.updateMeet(meet, meetId, userUid);
-    LocationService.saveLocationInfo(midPoint, meetId);
+    LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress);
 }
 };
 
