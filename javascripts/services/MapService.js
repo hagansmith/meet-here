@@ -15,7 +15,6 @@ app.service("MapService", function ($http, $q, MAP_CONFIG, LocationService, Mark
 // };
 
 const placeSearch = (coord) => {
-  console.log("meet in place search", coord);
   var map;
   var service;
   var infowindow;
@@ -24,13 +23,13 @@ const placeSearch = (coord) => {
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: location,
-        zoom: 15
+        zoom: 14
       });
 
     var request = {
       location: location,
-      radius: '500',
-      type: ['all']
+      radius: '1000',
+      type: ['cafe']
     };
 
 
@@ -43,9 +42,7 @@ const placeSearch = (coord) => {
         position: {lat:coord.lat, lng:coord.lng},
         icon: {
           url: "http://maps.google.com/mapfiles/ms/icons/red.png",
-          animation: google.maps.Animation.DROP,
           anchor: new google.maps.Point(10, 10),
-          // scaledSize: new google.maps.Size(10, 10)
         }
       }
     );
@@ -72,7 +69,6 @@ const placeSearch = (coord) => {
           }
         );
       }
-
 };
 
 const placeDetail = (placeID) => {
