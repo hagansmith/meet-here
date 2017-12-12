@@ -13,11 +13,12 @@ app.controller("MeetHereCtrl", function($q, $rootScope, $routeParams, $scope, Au
        return $q((resolve, reject) => {
          gMaps(results).then(()=> {
            let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
+           MapService.placeSearch(middy);
            return MapService.reverseGeocode(middy).then((address) => {
              $scope.meetAddress = address.data.results[0].formatted_address;
            });
 
-          //MapService.placeSearch(results)
+
         });
        }).catch((error) => {
          console.log("error in get single meet gMaps", error);
