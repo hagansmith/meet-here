@@ -11,6 +11,7 @@ app.run(function($location, $rootScope, FIREBASE_CONFIG, MAP_CONFIG, AuthService
   firebase.initializeApp(FIREBASE_CONFIG);
   GoogleMapsLoader.KEY = MAP_CONFIG;
   GoogleMapsLoader.LIBRARIES = ['geometry', 'places'];
+  GoogleMapsLoader.REGION = 'US';
   GoogleMapsLoader.load(function(google) { });
   //watch method that fires on change of a route.  3 inputs.
   //event is a change event

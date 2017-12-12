@@ -8,20 +8,22 @@ app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthSe
  const getSingleMeet = () => {
    MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
      $scope.meet=results;
-     return gMaps(results);
+     gMaps(results);
+     //let middy =  MapService.reverseGeocode(midPoint);
+      //$scope.meet.location.address = middy;
+    //MapService.placeSearch(results);
    }).catch((error)=>{
       console.log("error in getSingleMeet", error);
-    });
+  });
 };
 getSingleMeet();
-
 
 // use meet coordinates to calculate midpoint coordinates
 const gMaps = (results) => {
   GoogleMapsLoader.load(function(google) {
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: {lat: 41.850033, lng: -87.6500523},
+        // zoom: 12,
+        // center: {lat: 41.850033, lng: -87.6500523},
       });
 
       map.controls[google.maps.ControlPosition.TOP_CENTER].push(
@@ -39,7 +41,7 @@ const gMaps = (results) => {
         position: {lat: results.marker2.lat, lng: results.marker2.lng}
       });
 
-      midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(),".5");
+      midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), ".5" );
 
       let marker3 = new google.maps.Marker({
         map: map,
@@ -69,7 +71,7 @@ const gMaps = (results) => {
       //   map: map
       // });
 
-      update();
+      //update();
 
 
     function update() {
@@ -84,9 +86,6 @@ const gMaps = (results) => {
   });
 };
 
-$scope.meetNowDetails = (meet) => {
-  console.log("in meetNowDetails", meet);
-};
 
 $scope.saveDetail = (meet) => {
   if (!userUid){
