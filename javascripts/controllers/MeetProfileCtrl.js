@@ -1,6 +1,6 @@
 
 
-app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService, MeetService){
+app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthCtrl, MapService, MeetService){
    $scope.meets = {};
 
    const loadMeetProfile = ( ) => {
