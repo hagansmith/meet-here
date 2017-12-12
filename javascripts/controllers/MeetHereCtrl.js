@@ -1,17 +1,30 @@
 
 
-app.controller("MeetHereCtrl", function($rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
+app.controller("MeetHereCtrl", function($q, $rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
   $scope.meet = {};
+  $scope.meetAddress = {};
   let userUid = $rootScope.uid;
   let midPoint = {};
 
  const getSingleMeet = () => {
-   MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
-     $scope.meet=results;
-     gMaps(results);
-     //let middy =  MapService.reverseGeocode(midPoint);
-      //$scope.meet.location.address = middy;
-    //MapService.placeSearch(results);
+   return $q((resolve, reject) => {
+     MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+       $scope.meet=results;
+       return $q((resolve, reject) => {
+         gMaps(results).then(()=> {
+           let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
+           return MapService.reverseGeocode(middy).then((address) => {
+             console.log($scope.meet);
+             $scope.meetAddress = address.data.results[0].formatted_address;
+           });
+
+          //MapService.placeSearch(results)
+        });
+       }).catch((error) => {
+         console.log("error in get single meet gMaps", error);
+       });
+
+    });
    }).catch((error)=>{
       console.log("error in getSingleMeet", error);
   });
@@ -20,7 +33,8 @@ getSingleMeet();
 
 // use meet coordinates to calculate midpoint coordinates
 const gMaps = (results) => {
-  GoogleMapsLoader.load(function(google) {
+   return $q((resolve, reject) => {
+     GoogleMapsLoader.load(function(google) {
       var map = new google.maps.Map(document.getElementById('map'), {
         // zoom: 12,
         // center: {lat: 41.850033, lng: -87.6500523},
@@ -42,7 +56,6 @@ const gMaps = (results) => {
       });
 
       midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), ".5" );
-
       let marker3 = new google.maps.Marker({
         map: map,
         draggable: true,
@@ -72,7 +85,8 @@ const gMaps = (results) => {
       // });
 
       //update();
-
+      console.log(midPoint);
+      resolve (midPoint);
 
     function update() {
       var path = [marker1.getPosition(), marker2.getPosition()];
@@ -84,6 +98,7 @@ const gMaps = (results) => {
       document.getElementById('destination').value = path[1].toString();
     }
   });
+});
 };
 
 
