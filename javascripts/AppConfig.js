@@ -24,12 +24,12 @@ app.run(function($location, $rootScope, FIREBASE_CONFIG, MAP_CONFIG, AuthService
       let appTo;
 
     // to keep error from being thrown on page refresh
-    if (currRoute.originalPath) {
-      // check if the user is going to the auth page = currRoute.originalPath
-      // if user is on auth page then appTo is true
-      // if it finds something other than /auth it return a -1 and -1!==-1 so resolves to false
-      appTo = currRoute.originalPath.indexOf('/Profile') !== -1;
-    }
+    // if (currRoute.originalPath) {
+    //   // check if the user is going to the auth page = currRoute.originalPath
+    //   // if user is on auth page then appTo is true
+    //   // if it finds something other than /auth it return a -1 and -1!==-1 so resolves to false
+    //   appTo = currRoute.originalPath.indexOf('/MeetHere') !== -1;
+    // }
 
     //if not on /auth page AND not logged in redirect to /auth
     if (!appTo && !logged) {
@@ -55,38 +55,38 @@ app.config(function( $locationProvider, $routeProvider ){
   $routeProvider
     .when("/NewMeet", {
       templateUrl: 'partials/newMeet.html',
-      controller: 'NewMeetCtrl',
-      resolve: { isAuth }
+      controller: 'NewMeetCtrl'
+
     } )
     .when("/MeetNow", {
       templateUrl: 'partials/meetNow.html',
-      controller: 'MeetNowCtrl',
-      resolve: { isAuth }
+      controller: 'MeetNowCtrl'
+
     } )
     .when("/MeetNow/:id", {
       templateUrl: 'partials/meetNow.html',
-      controller: 'MeetNowCtrl',
-      resolve: { isAuth }
+      controller: 'MeetNowCtrl'
+
     } )
     .when("/MeetLater", {
       templateUrl: 'partials/meetLater.html',
-      controller: 'MeetLaterCtrl',
-      resolve: { isAuth }
+      controller: 'MeetLaterCtrl'
+
     } )
     .when("/MeetLater/:id", {
       templateUrl: 'partials/meetLater.html',
-      controller: 'MeetLaterCtrl',
-      resolve: { isAuth }
+      controller: 'MeetLaterCtrl'
+
     } )
     .when("/MeetHere/:id", {
       templateUrl: 'partials/meetHere.html',
-      controller: 'MeetHereCtrl',
-      resolve: { isAuth }
+      controller: 'MeetHereCtrl'
+
     } )
     .when("/Profile", {
       templateUrl: 'partials/meetProfile.html',
-      controller: 'MeetProfileCtrl',
-      resolve: { isAuth }
+      controller: 'MeetProfileCtrl'
+
     } )
 
     .otherwise('NewMeet');

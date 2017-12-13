@@ -91,6 +91,7 @@ $scope.meetNowDetails = (meet) => {
 $scope.saveDetail = (meet) => {
   if (!userUid){
     AuthService.authenticateGoogle().then((result)=>{
+      $rootScope.userUid = result.user.uid;
       userUid = result.user.uid;
     });
   } else {

@@ -1,11 +1,10 @@
 
 
-app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthCtrl, MapService, MeetService){
+app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService, MeetService){
    $scope.meets = {};
 
    const loadMeetProfile = ( ) => {
      if (!$rootScope.uid) {
-       AuthCtrl.authenticate();
      } else {
        MeetService.getMeetInfoByUid($rootScope.uid).then((results) => {
           $scope.meets = results;
