@@ -2,11 +2,12 @@
 
 app.service("LocationService", function ($http, $q, FIREBASE_CONFIG){
 
-const saveLocationInfo = (midpoint, meetId) => {
+const saveLocationInfo = (midpoint, meetId, meetAddress) => {
   let locationObject = {
     "meetid" : meetId,
     "lat" : midpoint.lat(),
-    "lng" : midpoint.lng()
+    "lng" : midpoint.lng(),
+    "address" : meetAddress
   };
   return $http.post(`${FIREBASE_CONFIG.databaseURL}/meetLocations.json`, JSON.stringify(locationObject));
 };
