@@ -10,10 +10,6 @@ app.service("MapService", function ($http, $q, MAP_CONFIG, LocationService, Mark
     return $http.get (`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coord.lat},${coord.lng}&key=${MAP_CONFIG}`);
   };
 
-// const placeSearch = (coord) => {
-//   return $http.get (`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coord.lat},${coord.lng}&radius=500&types=food&name=cruise&key=${MAP_CONFIG}`);
-// };
-
 const placeSearch = (coord) => {
   var map;
   var service;
@@ -76,13 +72,9 @@ const placeDetail = (placeID) => {
 };
 
 const directions = (meet, middy) => {
-  console.log(middy);
 return $http.get (`https://maps.googleapis.com/maps/api/directions/json?origin=${meet.marker1.address}&destination=${middy.lat},${middy.lng}&key=${MAP_CONFIG}`);
 };
 
-// const travelTime = (meet) {
-// https://maps.googleapis.com/maps/api/directions/json?origin=75+9th+Ave+New+York,+NY&destination=MetLife+Stadium+1+MetLife+Stadium+Dr+East+Rutherford,+NJ+07073&departure_time=1541202457&traffic_model=best_guess&key=YOUR_API_KEY
-// };
   return { directions, getCoordByAddressQuery, reverseGeocode, placeSearch, placeDetail};
 
 });

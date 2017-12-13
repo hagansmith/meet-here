@@ -15,7 +15,7 @@ app.controller("MeetHereCtrl", function($q, $rootScope, $routeParams, $scope, Au
            let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
            return $q((resolve, reject) => {
              MapService.directions($scope.meet, middy).then((directions)=> {
-               console.log("directions", directions);
+               // console.log("directions", directions);
                $scope.duration = directions.data.routes["0"].legs["0"].duration.text;
                return MapService.reverseGeocode(middy).then((address) => {
                  $scope.meetAddress = address.data.results[0].formatted_address;
@@ -191,6 +191,44 @@ $scope.saveDetail = (meet) => {
     MeetService.updateMeet(meet, meetId, userUid);
     LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress);
 }
+};
+
+
+$scope.directionsDisplay = (meet, value) => {
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var map;
+
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  var location = new google.maps.LatLng(meet.location.lat, meet.location.lng);
+  var mapOptions = {
+    zoom:7,
+    center: location
+  };
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  directionsDisplay.setMap(map);
+
+
+function calcRoute(meet, value) {
+  let start;
+  if (value === 1) {
+  start = meet.marker1.address;
+  } else if (value === 2){
+  start = meet.marker2.address;
+  }
+  var end = meet.location.address;
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  };
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(result);
+    }
+  });
+}
+  calcRoute(meet, value);
 };
 
 });
