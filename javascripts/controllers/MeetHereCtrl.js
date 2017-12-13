@@ -1,6 +1,6 @@
 
 
-app.controller("MeetHereCtrl", function($q, $rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
+app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
   $scope.meet = {};
   $scope.meetAddress = {};
   let userUid = $rootScope.uid;
@@ -229,6 +229,15 @@ function calcRoute(meet, value) {
   });
 }
   calcRoute(meet, value);
+};
+
+$scope.meetNowDetails = (meet) => {
+  let meetId =  meet.marker1.meetid;
+   if (!meet.where){
+     $location.path(`/MeetNow/${meetId}`);
+   }else{
+     $location.path(`/MeetLater/${meetId}`);
+   }
 };
 
 });
