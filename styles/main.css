@@ -1,5 +1,5 @@
 body {
-  background-color: firebrick; }
+  background-color: #5F4B8B; }
 
 input[type="text"],
 select.form-control {
@@ -17,3 +17,6 @@ select.form-control:focus {
 
 #map {
   height: 400px; }
+
+#newMeet .jumbotron {
+  background-image: url("../images/Many_Roads/Many_Roads.jpg"); }
