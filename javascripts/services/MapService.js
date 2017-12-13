@@ -10,10 +10,6 @@ app.service("MapService", function ($http, $q, MAP_CONFIG, LocationService, Mark
     return $http.get (`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coord.lat},${coord.lng}&key=${MAP_CONFIG}`);
   };
 
-// const placeSearch = (coord) => {
-//   return $http.get (`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coord.lat},${coord.lng}&radius=500&types=food&name=cruise&key=${MAP_CONFIG}`);
-// };
-
 const placeSearch = (coord) => {
   var map;
   var service;
@@ -72,11 +68,13 @@ const placeSearch = (coord) => {
 };
 
 const placeDetail = (placeID) => {
-  return $http.get (`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeID}=${MAP_CONFIG}`);
+  return $http.get (`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeID}&key=${MAP_CONFIG}`);
 };
 
+const directions = (meet, middy) => {
+return $http.get (`https://maps.googleapis.com/maps/api/directions/json?origin=${meet.marker1.address}&destination=${middy.lat},${middy.lng}&key=${MAP_CONFIG}`);
+};
 
-
-  return { getCoordByAddressQuery, reverseGeocode, placeSearch, placeDetail};
+  return { directions, getCoordByAddressQuery, reverseGeocode, placeSearch, placeDetail};
 
 });
