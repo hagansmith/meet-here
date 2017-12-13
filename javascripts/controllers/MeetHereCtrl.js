@@ -13,9 +13,16 @@ app.controller("MeetHereCtrl", function($q, $rootScope, $routeParams, $scope, Au
        return $q((resolve, reject) => {
          gMaps(results).then(()=> {
            let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
-           MapService.directions(meet, middy);
-           return MapService.reverseGeocode(middy).then((address) => {
-             $scope.meetAddress = address.data.results[0].formatted_address;
+           return $q((resolve, reject) => {
+             MapService.directions($scope.meet, middy).then((directions)=> {
+               console.log("directions", directions);
+               $scope.duration = directions.data.routes["0"].legs["0"].duration.text;
+               return MapService.reverseGeocode(middy).then((address) => {
+                 $scope.meetAddress = address.data.results[0].formatted_address;
+               });
+             });
+           }).catch((error)=> {
+              console.log("error in directions", error);
            });
          });
        }).catch((error) => {
@@ -105,10 +112,10 @@ const gMaps = (results) => {
       //update();
 
 
-          // map = new google.maps.Map(document.getElementById('map'), {
-          //     center: location,
-          //     zoom: 14
-          //   });
+          map = new google.maps.Map(document.getElementById('map'), {
+              center: location,
+              zoom: 14
+            });
 
           var request = {
             location: location,

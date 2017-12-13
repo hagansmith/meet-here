@@ -76,8 +76,8 @@ const placeDetail = (placeID) => {
 };
 
 const directions = (meet, middy) => {
-  console.log("place in directions", meet, middy);
-// return $http.get (`https://maps.googleapis.com/maps/api/directions/json?origin=${marker1}&destination=${marker1}&departure_time=${departure_time}&traffic_model=best_guess&key=${MAP_CONFIG}`);
+  console.log(middy);
+return $http.get (`https://maps.googleapis.com/maps/api/directions/json?origin=${meet.marker1.address}&destination=${middy.lat},${middy.lng}&key=${MAP_CONFIG}`);
 };
 
 // const travelTime = (meet) {
