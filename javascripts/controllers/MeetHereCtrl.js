@@ -13,7 +13,7 @@ app.controller("MeetHereCtrl", function($q, $rootScope, $routeParams, $scope, Au
        return $q((resolve, reject) => {
          gMaps(results).then(()=> {
            let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
-           MapService.placeSearch(middy);
+           //MapService.placeSearch(middy);
            return MapService.reverseGeocode(middy).then((address) => {
              $scope.meetAddress = address.data.results[0].formatted_address;
            });
@@ -35,7 +35,13 @@ getSingleMeet();
 const gMaps = (results) => {
    return $q((resolve, reject) => {
      GoogleMapsLoader.load(function(google) {
-      var map = new google.maps.Map(document.getElementById('map'), {
+       var map;
+       var service;
+       var infowindow;
+
+
+
+      map = new google.maps.Map(document.getElementById('map'), {
         // zoom: 12,
         // center: {lat: 41.850033, lng: -87.6500523},
       });
@@ -61,7 +67,7 @@ const gMaps = (results) => {
         draggable: true,
         position:{lat: midPoint.lat(), lng: midPoint.lng()}
       });
-
+      var location= new google.maps.LatLng(midPoint.lat() ,midPoint.lng());
       var bounds = new google.maps.LatLngBounds(
           marker1.getPosition(), marker2.getPosition());
       map.fitBounds(bounds);
@@ -84,7 +90,73 @@ const gMaps = (results) => {
       //   map: map
       // });
 
+      var cityCircle = new google.maps.Circle(
+        {
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            // fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: {lat: midPoint.lat(), lng: midPoint.lng()},
+            radius: 500
+          }
+        );
+
+
       //update();
+
+
+          // map = new google.maps.Map(document.getElementById('map'), {
+          //     center: location,
+          //     zoom: 14
+          //   });
+
+          var request = {
+            location: location,
+            radius: '1000',
+            type: ['cafe']
+          };
+
+
+          service = new google.maps.places.PlacesService(map);
+          service.nearbySearch(request, callback);
+
+          let meetMarker = new google.maps.Marker (
+            {
+              map: map,
+              position: {lat: midPoint.lat(), lng: midPoint.lng()},
+              icon: {
+                url: "http://maps.google.com/mapfiles/ms/icons/red.png",
+                anchor: new google.maps.Point(10, 10),
+              }
+            }
+          );
+
+          function callback (results, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+              for (var i = 0; i < results.length; i++) {
+                var place = results[i];
+                addMarker(place);
+              }
+            }
+          }
+
+          function addMarker(place) {
+              var markers = new google.maps.Marker(
+                {
+                  map: map,
+                  position: place.geometry.location,
+                  icon: {
+                    url: place.icon,
+                    anchor: new google.maps.Point(10, 10),
+                    scaledSize: new google.maps.Size(10, 10)
+                  }
+                }
+              );
+            }
+
+
 
       resolve (midPoint);
 
