@@ -2,10 +2,10 @@
 
 app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService, MeetService){
    $scope.meets = {};
+   let uid = $rootScope.uid;
 
    const loadMeetProfile = ( ) => {
-     if (!$rootScope.uid) {
-     } else {
+     if (uid) {
        MeetService.getMeetInfoByUid($rootScope.uid).then((results) => {
           $scope.meets = results;
        }).catch((err)=>{
