@@ -144,4 +144,8 @@ $scope.updateMeetLaterDetails = (meet) => {
   $location.path(`/MeetHere/${meetId}`);
 };
 
+$scope.places = [
+  "airport", "amusement_park", "aquarium", "art_gallery", "atm", "bakery", "bank", "bar", "beauty_salon", "book_store", "bowling_alley", "bus_station", "cafe", "campground", "casino","cemetery", "church", "city_hall", "clothing_store", "convenience_store", "courthouse", "department_store", "embassy", "gas_station", "library", "lodging", "movie_theater", "museum", "night_club", "park", "parking", "restaurant",  "rv_park", "shopping_mall", "store", "subway_station", "university", "zoo"
+];
+
 });
