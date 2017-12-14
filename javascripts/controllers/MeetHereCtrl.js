@@ -15,7 +15,6 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
            let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
            return $q((resolve, reject) => {
              MapService.directions($scope.meet, middy).then((directions)=> {
-               // console.log("directions", directions);
                $scope.duration = directions.data.routes["0"].legs["0"].duration.text;
                return MapService.reverseGeocode(middy).then((address) => {
                  $scope.meetAddress = address.data.results[0].formatted_address;
@@ -120,10 +119,10 @@ const gMaps = (results) => {
           var request = {
             location: location,
             radius: '1000',
-            type: ['cafe']
+            type: [$scope.meet.place]
           };
 
-
+          infowindow = new google.maps.InfoWindow();
           service = new google.maps.places.PlacesService(map);
           service.nearbySearch(request, callback);
 
@@ -153,12 +152,16 @@ const gMaps = (results) => {
                   map: map,
                   position: place.geometry.location,
                   icon: {
-                    url: place.icon,
+                    url: "http://maps.google.com/mapfiles/ms/icons/blue.png",
                     anchor: new google.maps.Point(10, 10),
-                    scaledSize: new google.maps.Size(10, 10)
+                    scaledSize: new google.maps.Size(15, 15)
                   }
                 }
               );
+              google.maps.event.addListener(markers, 'click', function() {
+                infowindow.setContent(place.name);
+                infowindow.open(map, this);
+              });
             }
 
 

@@ -9,7 +9,8 @@ const saveMeetInfo = (meet) => {
     "uid": meet.uid,
     "where": meet.where,
     "name": meet.name,
-    "when": meet.min
+    "when": meet.min,
+    "place": meet.place
   };
   return $http.post(`${FIREBASE_CONFIG.databaseURL}/meets.json`, JSON.stringify(meetObject));
 };
