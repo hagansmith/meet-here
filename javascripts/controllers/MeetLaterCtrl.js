@@ -2,7 +2,6 @@
 
 app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $scope, MeetService, MarkerService, MapService){
 
- //$scope.meet ={};
   let meetMarkers = {};
   let originalMeet;
   let newMeet = {};
@@ -140,7 +139,7 @@ $scope.updateMeetLaterDetails = (meet) => {
  if (meet.marker2) {
      MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
   }
-    meetId = originalMeet.location.meetid;
+    meetId = $routeParams.id;
   $location.path(`/MeetHere/${meetId}`);
 };
 

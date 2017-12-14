@@ -44,7 +44,6 @@ const getCurrentMeet = (meetId) => {
 
 const editMeetInfo = (meet, originalMeet) => {
   if (!meet) {
-    console.log("no change");
     return;
   } else {
   let meetObject = {
@@ -55,8 +54,7 @@ const editMeetInfo = (meet, originalMeet) => {
     "history": originalMeet.history,
     "uid": originalMeet.uid
   };
-  console.log("original meet", originalMeet);
-  let meetId = originalMeet.location.meetid;
+  let meetId = originalMeet.marker1.meetid;
   return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
 }
 };
@@ -81,34 +79,33 @@ const updateMeet = (meet, meetId, userUid) => {
   const getAllMapDataForCurrentMeet = (meetId) => {
     let meetData = {};
       return $q((resolve, reject) => {
-        return getCurrentMeet(meetId)
-      .then((meet) => {
-        Object.keys(meet).forEach((key)=>{
-          meetData[key] = meet[key];
-        });
+        return getCurrentMeet(meetId).then((meet) => {
+          Object.keys(meet).forEach((key)=>{
+            meetData[key] = meet[key];
+          });
         return MarkerService.getMarkersByMeetId(meetId);
-      }).then((markers)=>{
-        let markersArray = [];
-        Object.keys(markers).forEach((key)=>{
-          markers[key].id = key;
-          markersArray.push(markers[key]);
-        });
-        meetData.marker1 = markersArray[0];
-        meetData.marker2 = markersArray[1];
-        return LocationService.getMeetLocationsByMeetId(meetId);
-      }).then((locations)=>{
-        let locationArray = [];
-        Object.keys(locations).forEach((key)=>{
-          locations[key].id = key;
-          locationArray.push(locations[key]);
-        });
+        }).then((markers)=>{
+          let markersArray = [];
+          Object.keys(markers).forEach((key)=>{
+            markers[key].id = key;
+            markersArray.push(markers[key]);
+          });
+          meetData.marker1 = markersArray[0];
+          meetData.marker2 = markersArray[1];
+          return LocationService.getMeetLocationsByMeetId(meetId);
+        }).then((locations)=>{
+          let locationArray = [];
+          Object.keys(locations).forEach((key)=>{
+            locations[key].id = key;
+            locationArray.push(locations[key]);
+          });
           meetData.location = locationArray[0];
-        resolve(meetData);
+          resolve(meetData);
+        });
       }).catch((error) => {
         console.log("error in service getAllMapDataForCurrentMeet", error);
       });
-    });
-  };
+    };
 
 
 return {saveMeetInfo, getAllMapDataForCurrentMeet, getMeetInfoByUid, getCurrentMeet, editMeetInfo, updateMeet, deleteMeet};
