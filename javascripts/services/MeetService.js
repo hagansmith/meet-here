@@ -52,7 +52,8 @@ const editMeetInfo = (meet, originalMeet) => {
     "when": meet.min,
     "saved": originalMeet.saved,
     "history": originalMeet.history,
-    "uid": originalMeet.uid
+    "uid": originalMeet.uid,
+    "place": meet.place
   };
   let meetId = originalMeet.marker1.meetid;
   return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
@@ -67,7 +68,8 @@ const updateMeet = (meet, meetId, userUid) => {
     "where": meet.where,
     "saved": meet.saved,
     "name":meet.name,
-    "when":meet.when
+    "when":meet.when,
+    "place": meet.place
   };
     return $http.put(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`, JSON.stringify(meetObject));
 };
