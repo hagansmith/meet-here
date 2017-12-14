@@ -1,10 +1,24 @@
-app.run(function($location, $rootScope, FIREBASE_CONFIG, MAP_CONFIG){
+app.run(function($location, $rootScope, FIREBASE_CONFIG, MAP_CONFIG, AuthService){
 
   firebase.initializeApp(FIREBASE_CONFIG);
   GoogleMapsLoader.KEY = MAP_CONFIG;
   GoogleMapsLoader.LIBRARIES = ['geometry', 'places'];
   GoogleMapsLoader.REGION = 'US';
   GoogleMapsLoader.load(function(google) { });
+
+  //watch method that fires on change of a route.  3 inputs.
+  //event is a change event
+  //currRoute is information about your current route
+  //prevRoute is information about the route you came from
+  $rootScope.$on('$routeChangeStart', function(event, currRoute, prevRoute) {
+    // checks to see if there is a current user
+      let logged = AuthService.isAuthenticated();
+      if (!logged) {
+        $rootScope.navbar = false;
+      } else if (logged){
+        $rootScope.navbar = true;
+    }
+});
 
  });
 
