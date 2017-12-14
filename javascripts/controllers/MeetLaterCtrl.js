@@ -1,12 +1,10 @@
-
-
 app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $scope, MeetService, MarkerService, MapService){
 
   let meetMarkers = {};
   let originalMeet;
   let newMeet = {};
 
-// use current location to fill in address
+  // use current location to fill in address
   $scope.useCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -44,8 +42,8 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
 
 // Autocomplete address
   const InitAutocomplete = () => {
-      GoogleMapsLoader.load(function(google) {
-       // Create the autocomplete object, restricting the search to geographical
+    GoogleMapsLoader.load(function(google) {
+    // Create the autocomplete object, restricting the search to geographical
        // location types.
       let autocomplete = new google.maps.places.Autocomplete(
            /** @type {!HTMLInputElement} */(document.getElementById("autocomplete")),
