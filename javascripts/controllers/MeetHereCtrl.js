@@ -2,7 +2,6 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
   $scope.meet = {};
   $scope.meetAddress = {};
   let userUid = $rootScope.uid;
-  console.log(userUid);
   let midPoint = {};
 
  const getSingleMeet = () => {
@@ -179,7 +178,6 @@ getSingleMeet();
   };
 
   $scope.saveDetail = (meet) => {
-    console.log("in save detail", $rootScope.uid);
     if (!userUid){
       AuthService.authenticateGoogle().then((result)=>{
         $rootScope.uid = result.user.uid;
