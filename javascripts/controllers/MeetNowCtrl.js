@@ -96,7 +96,8 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
           "where": results.where,
           "name": results.name,
           "min": results.when,
-          "edit":true
+          "edit":true,
+          "place": results.place
         };
       $scope.meet=formattedresults;
       meetMarkers = {

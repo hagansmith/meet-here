@@ -94,7 +94,8 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
        "where": results.where,
        "name": results.name,
        "min": results.when,
-       "edit":true
+       "edit":true,
+       "place": results.place
      };
    $scope.meet=formattedresults;
    meetMarkers = {
