@@ -3,30 +3,41 @@
     <div id="notLoggedIn"class="text-center" ng-show="!navbar"><h3>You must <a ng-controller="AuthCtrl" ng-href="#" ng-click="authenticate()">sign in</a> to meet here</div>
     <div id="loggedin" ng-show="navbar">
     <h2>Meets</h2>
-    <div id="searchHistory" class="col-xs-12">
-      <h4> Search History </h4>
-      <div id="meet" class="col-xs-10s" ng-repeat="meet in meets">
-      <span class="glyphicon glyphicon-map-marker col-xs-1" aria-hidden="true"></span>
-      <p class="col-xs-3"> {{meet.meetName}} </p><p class="col-xs-3">{{meet.location.address}}</p>
-      <p> {{meet.marker1.address}} | {{meet.marker2.address}}</p>
-      <a ng-click = "saveMeet(meet)"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
+    <div id="searchHistory" class="col-xs-12" ng-hide="meet.saved">
+      <h4> Search History <font size="-2">(scroll for more)</font><span> </h4>
+      <div class=history-container>
+        <div  class="history container-fluid" ng-repeat="meet in meets">
+          <div class="row historyInfo">
+            <a  class="col-xs-1 text-right" ng-click = "viewMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a>
+            <p class="meetName col-xs-3">{{meet.name}}</p>
+            <p class="col-xs-5 text-left">{{meet.location.address}}</p>
+            <a class ="col-xs-1" ng-click = "saveMeet(meet)">Save</a>
+            <a class="erase col-xs-1" ng-click = "eraseMeet(meet.marker1.meetid)">Remove</a>
+          </div>
+          <div class="locationInfo container-fluid">
+            <h5 class="row col-xs-offset-1">Location 1 {{meet.marker1.address}} | Location 2: {{meet.marker2.address}}
+            <hr>
+          </div>
+        </div>
       </div>
     </div>
     <hr>
     <div id="savedMeets" class="col-xs-12">
       <h4> Saved Meets </h4>
-        <div id="meet" class="col-xs-12" ng-repeat="meet in meets" ng-show="meet.saved" >
-          <div class = "col-xs-12">
-            <a class="col-xs-1" ng-click = "viewMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a><p class="col-xs-3">{{meet.name}}<p>
-            <p class="col-xs-5">{{meet.location.address}}</p>
+        <div class="meet container-fluid" ng-repeat="meet in meets" ng-show="meet.saved" >
+          <div class="row meetInfo">
+            <a  class="col-xs-1 text-right" ng-click = "viewMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a>
+            <p class="meetName col-xs-3">{{meet.name}}</p>
+            <p class="col-xs-5 text-left">{{meet.location.address}}</p>
             <a class="edit col-xs-1" ng-click = "editMeet(meet)"><span class="glyphicon glyphicon-edit " aria-hidden="true"></span></a>
             <a class="erase col-xs-1" ng-click = "eraseMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span></a>
           </div>
-          <div class = "col-xs-12">
-            <h5 class="col-xs-12"> {{meet.marker1.address}} | {{meet.marker2.address}}</h5>
+          <div class="locationInfo container-fluid">
+            <h5 class="row col-xs-offset-1">Location 1 {{meet.marker1.address}} | Location 2: {{meet.marker2.address}}
+            <hr>
           </div>
         </div>
       </div>
-      </div>
     </div>
   </div>
+</div>

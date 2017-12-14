@@ -4,6 +4,17 @@ body {
   background-color: $light;
 }
 
+.navbar-brand {
+
+    padding: 0;
+
+    img {
+      position:fixed;
+      height: inherit;
+      left: 25px;
+    }
+}
+
 input[type="text"],
 select.form-control {
   background: transparent;
@@ -24,8 +35,12 @@ select.form-control:focus {
   height: 400px;
 }
 
-#newMeet {
-  .jumbotron {
-    background-image: url("../images/Many_Roads/Many_Roads.jpg");
-  }
+
+.glyphicon {
+  font-size: 1.5em;
+}
+
+.history-container {
+  height: 200px;
+  overflow: scroll;
 }
