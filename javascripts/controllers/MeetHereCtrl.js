@@ -2,6 +2,7 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
   $scope.meet = {};
   $scope.meetAddress = {};
   let userUid = $rootScope.uid;
+  console.log(userUid);
   let midPoint = {};
 
  const getSingleMeet = () => {
@@ -16,6 +17,7 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
                $scope.duration = directions.data.routes["0"].legs["0"].duration.text;
                return MapService.reverseGeocode(middy).then((address) => {
                  $scope.meetAddress = address.data.results[0].formatted_address;
+                 $scope.meet.location.address = address.data.results[0].formatted_address;
                });
              });
            }).catch((error)=> {
@@ -53,7 +55,7 @@ getSingleMeet();
         draggable: true,
         position: {lat: results.marker1.lat, lng: results.marker1.lng}
       });
-
+      //markers are not returning an setting by page load?
       let marker2 = new google.maps.Marker({
         map: map,
         draggable: true,
@@ -61,6 +63,10 @@ getSingleMeet();
       });
 
       midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), ".5" );
+      $scope.meet.location = {
+        "lat": midPoint.lat(),
+        "lng": midPoint.lng()
+      };
       let marker3 = new google.maps.Marker({
         map: map,
         draggable: true,
@@ -173,6 +179,7 @@ getSingleMeet();
   };
 
   $scope.saveDetail = (meet) => {
+    console.log("in save detail", $rootScope.uid);
     if (!userUid){
       AuthService.authenticateGoogle().then((result)=>{
         $rootScope.uid = result.user.uid;
@@ -189,12 +196,10 @@ getSingleMeet();
     let meetId = $routeParams.id;
     MeetService.updateMeet(meet, meetId, userUid);
     LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress);
-    $scope.$apply(()=>{
     $location.url("/Profile");
-    });
   };
 
-  $scope.directionsDisplay = (meet, value) => {
+  $scope.directionsDisp = (meet, value) => {
   var directionsDisplay;
   var directionsService = new google.maps.DirectionsService();
   var map;
@@ -216,7 +221,7 @@ getSingleMeet();
     } else if (value === 2){
       start = meet.marker2.address;
     }
-    var end = meet.location.address;
+    var end =  meet.location.address;
     var request = {
       origin: start,
       destination: end,

@@ -1,6 +1,5 @@
-
-
 app.controller("NavCtrl", function($location, $rootScope, $scope, $window, AuthService){
+
   $scope.logoutUser = () => {
     delete $rootScope.uid;
     $window.localStorage.clear();
@@ -8,4 +7,5 @@ app.controller("NavCtrl", function($location, $rootScope, $scope, $window, AuthS
     $rootScope.navbar = false;
     $location.path('/NewMeet');
   };
+
 });
