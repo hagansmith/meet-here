@@ -1,5 +1,3 @@
-
-
 app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
   $scope.meet = {};
   $scope.meetAddress = {};
@@ -27,7 +25,7 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
        }).catch((error) => {
          console.log("error in get single meet gMaps", error);
        });
-    });
+     });
    }).catch((error)=>{
       console.log("error in getSingleMeet", error);
   });
@@ -35,20 +33,17 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
 
 getSingleMeet();
 
-// use meet coordinates to calculate midpoint coordinates
-const gMaps = (results) => {
-   return $q((resolve, reject) => {
-     GoogleMapsLoader.load(function(google) {
-       var map;
-       var service;
-       var infowindow;
-
-
-
-      map = new google.maps.Map(document.getElementById('map'), {
+  // use meet coordinates to calculate midpoint coordinates
+  const gMaps = (results) => {
+    return $q((resolve, reject) => {
+      GoogleMapsLoader.load(function(google) {
+        var map;
+        var service;
+        var infowindow;
+        map = new google.maps.Map(document.getElementById('map'), {
         // zoom: 12,
         // center: {lat: 41.850033, lng: -87.6500523},
-      });
+        });
 
       map.controls[google.maps.ControlPosition.TOP_CENTER].push(
           document.getElementById('info'));
@@ -76,8 +71,8 @@ const gMaps = (results) => {
           marker1.getPosition(), marker2.getPosition());
       map.fitBounds(bounds);
 
-      google.maps.event.addListener(marker1, 'position_changed', update);
-      google.maps.event.addListener(marker2, 'position_changed', update);
+      // google.maps.event.addListener(marker1, 'position_changed', update);
+      // google.maps.event.addListener(marker2, 'position_changed', update);
 
       let poly = new google.maps.Polyline({
         strokeColor: '#FF0000',
@@ -107,100 +102,102 @@ const gMaps = (results) => {
           }
         );
 
-
       //update();
 
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: location,
+          zoom: 14
+        });
 
-          map = new google.maps.Map(document.getElementById('map'), {
-              center: location,
-              zoom: 14
-            });
+        var request = {
+          location: location,
+          radius: '1000',
+          type: [$scope.meet.place]
+        };
 
-          var request = {
-            location: location,
-            radius: '1000',
-            type: [$scope.meet.place]
-          };
+        infowindow = new google.maps.InfoWindow();
+        service = new google.maps.places.PlacesService(map);
+        service.nearbySearch(request, callback);
 
-          infowindow = new google.maps.InfoWindow();
-          service = new google.maps.places.PlacesService(map);
-          service.nearbySearch(request, callback);
-
-          let meetMarker = new google.maps.Marker (
-            {
-              map: map,
-              position: {lat: midPoint.lat(), lng: midPoint.lng()},
-              icon: {
-                url: "http://maps.google.com/mapfiles/ms/icons/red.png",
-                anchor: new google.maps.Point(10, 10),
-              }
-            }
-          );
-
-          function callback (results, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-              for (var i = 0; i < results.length; i++) {
-                var place = results[i];
-                addMarker(place);
-              }
+        let meetMarker = new google.maps.Marker (
+          {
+            map: map,
+            position: {lat: midPoint.lat(), lng: midPoint.lng()},
+            icon: {
+              url: "http://maps.google.com/mapfiles/ms/icons/red.png",
+              anchor: new google.maps.Point(10, 10),
             }
           }
+        );
 
-          function addMarker(place) {
-              var markers = new google.maps.Marker(
-                {
-                  map: map,
-                  position: place.geometry.location,
-                  icon: {
-                    url: "http://maps.google.com/mapfiles/ms/icons/blue.png",
-                    anchor: new google.maps.Point(10, 10),
-                    scaledSize: new google.maps.Size(15, 15)
-                  }
-                }
-              );
-              google.maps.event.addListener(markers, 'click', function() {
-                infowindow.setContent(place.name);
-                infowindow.open(map, this);
-              });
+        function callback (results, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              var place = results[i];
+              addMarker(place);
             }
+          }
+        }
 
+        function addMarker(place) {
+            var markers = new google.maps.Marker(
+              {
+                map: map,
+                position: place.geometry.location,
+                icon: {
+                  url: "http://maps.google.com/mapfiles/ms/icons/blue.png",
+                  anchor: new google.maps.Point(10, 10),
+                  scaledSize: new google.maps.Size(15, 15)
+                }
+              }
+            );
+            google.maps.event.addListener(markers, 'click', function() {
+              infowindow.setContent(place.name);
+              infowindow.open(map, this);
+            });
+          }
 
+  resolve (midPoint);
 
-      resolve (midPoint);
-
-    function update() {
-      var path = [marker1.getPosition(), marker2.getPosition()];
-      poly.setPath(path);
-      // geodesicPoly.setPath(path);
-      var heading = google.maps.geometry.spherical.computeHeading(path[0], path[1]);
-      document.getElementById('heading').value = heading;
-      document.getElementById('origin').value = path[0].toString();
-      document.getElementById('destination').value = path[1].toString();
-    }
-  });
-});
-};
-
-
-$scope.saveDetail = (meet) => {
-  if (!userUid){
-    AuthService.authenticateGoogle().then((result)=>{
-      $rootScope.userUid = result.user.uid;
-      userUid = result.user.uid;
+      // function update() {
+      //   var path = [marker1.getPosition(), marker2.getPosition()];
+      //   poly.setPath(path);
+      //   // geodesicPoly.setPath(path);
+      //   var heading = google.maps.geometry.spherical.computeHeading(path[0], path[1]);
+      //   document.getElementById('heading').value = heading;
+      //   document.getElementById('origin').value = path[0].toString();
+      //   document.getElementById('destination').value = path[1].toString();
+      // }
+      });
     });
-  } else {
+  };
+
+  $scope.saveDetail = (meet) => {
+    if (!userUid){
+      AuthService.authenticateGoogle().then((result)=>{
+        $rootScope.uid = result.user.uid;
+        userUid = result.user.uid;
+        saveMeet(meet);
+      });
+    } else {
+      saveMeet(meet);
+    }
+  };
+
+  const saveMeet = (meet) => {
     meet.saved = true;
     let meetId = $routeParams.id;
     MeetService.updateMeet(meet, meetId, userUid);
     LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress);
-}
-};
+    $scope.$apply(()=>{
+    $location.url("/Profile");
+    });
+  };
 
-
-$scope.directionsDisplay = (meet, value) => {
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
-var map;
+  $scope.directionsDisplay = (meet, value) => {
+  var directionsDisplay;
+  var directionsService = new google.maps.DirectionsService();
+  var map;
 
   directionsDisplay = new google.maps.DirectionsRenderer();
   var location = new google.maps.LatLng(meet.location.lat, meet.location.lng);
@@ -212,35 +209,35 @@ var map;
   directionsDisplay.setMap(map);
 
 
-function calcRoute(meet, value) {
-  let start;
-  if (value === 1) {
-  start = meet.marker1.address;
-  } else if (value === 2){
-  start = meet.marker2.address;
-  }
-  var end = meet.location.address;
-  var request = {
-    origin: start,
-    destination: end,
-    travelMode: 'DRIVING'
-  };
-  directionsService.route(request, function(result, status) {
-    if (status == 'OK') {
-      directionsDisplay.setDirections(result);
+  function calcRoute(meet, value) {
+    let start;
+    if (value === 1) {
+      start = meet.marker1.address;
+    } else if (value === 2){
+      start = meet.marker2.address;
     }
-  });
-}
-  calcRoute(meet, value);
-};
+    var end = meet.location.address;
+    var request = {
+      origin: start,
+      destination: end,
+      travelMode: 'DRIVING'
+    };
+    directionsService.route(request, function(result, status) {
+      if (status == 'OK') {
+        directionsDisplay.setDirections(result);
+      }
+    });
+  }
+    calcRoute(meet, value);
+  };
 
-$scope.meetNowDetails = (meet) => {
-  let meetId =  meet.marker1.meetid;
-   if (!meet.where){
-     $location.path(`/MeetNow/${meetId}`);
-   }else{
-     $location.path(`/MeetLater/${meetId}`);
-   }
-};
+  $scope.meetNowDetails = (meet) => {
+    let meetId =  meet.marker1.meetid;
+     if (!meet.where){
+       $location.path(`/MeetNow/${meetId}`);
+     }else{
+       $location.path(`/MeetLater/${meetId}`);
+     }
+  };
 
 });

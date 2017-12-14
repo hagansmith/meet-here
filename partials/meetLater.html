@@ -1,42 +1,38 @@
-  <div class="container-fluid" id="meetLater">
-    <div class="jumbotron col-xs-10 col-xs-offset-1">
-      <form name="meetLater" validate>
-      <div class="col-xs-6">
+<div class="container-fluid" id="meetLater">
+  <div class="jumbotron col-xs-10 col-xs-offset-1">
+    <form name="meetLater" validate>
+    <div class="col-xs-6">
       <p>Meet</p>
       <select class="form-control form-group" ng-model="meet.where" required>
         <option value=".25">Closer to Location 1</option>
         <option value=".5">In the middle</option>
         <option value=".75">Closer to Location 2</option>
       </select>
-      </div>
-      <div class="col-xs-6">
-        <p>Where</p>
-        <select class="form-control form-group" ng-model="meet.place" required>
-          <option ng-repeat="place in places">{{place}}</option>
-        </select>
-      </div>
-        <div>
-        <div class="text-center">
-      <label class="radio-inline">
-        <input type="radio" name="routeByRadioOptions" id="distanceRadio" value="Distance" ng-model="meet.routeBy"> Distance
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="routeByRadioOptions" id="timeRadio" value="Time" ng-model="meet.routeBy"> Time
-      </label>
     </div>
+    <div class="col-xs-6">
+      <p>Where</p>
+      <select class="form-control form-group" ng-model="meet.place" required>
+        <option ng-repeat="place in places">{{place}}</option>
+      </select>
+    </div>
+    <div>
+      <div class="text-center">
+        <label class="radio-inline">
+          <input type="radio" name="routeByRadioOptions" id="distanceRadio" value="Distance" ng-model="meet.routeBy"> Distance
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="routeByRadioOptions" id="timeRadio" value="Time" ng-model="meet.routeBy"> Time
+        </label>
+      </div>
       <p>Location 1</p>
       <input type="text" id="currentLocation "class="form-control form-group" placeholder="500 Interstate Blvd." ng-model="meet.marker1">
       <button type="submit" class="btn btn-default col-xs-3 col-xs-offset-9" ng-click="useCurrentLocation()">Use Current Location</a></button>
-
       <p>Location 2</p>
       <input type="text" id="autocomplete" onFocus="geolocate()" class="form-control form-group" placeholder="Athens, GA"  ng-model="meet.marker2">
-
       <p>Meet Name</p>
       <input type="text" id="name" class="form-control form-group" placeholder="(optional) Christmas With Family"  ng-model="meet.name">
-
       <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="meetLaterDetails(meet)" ng-hide="meet.edit">Meet Where</a></button>
       <button type="submit" class="btn btn-default btn-lg col-xs-6 col-xs-offset-3" ng-click="updateMeetLaterDetails(meet)" ng-show="meet.edit">Update Where</a></button>
     </div>
-
   </div>
- </div>
+</div>

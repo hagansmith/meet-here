@@ -107,7 +107,6 @@ const updateMeet = (meet, meetId, userUid) => {
       });
     };
 
-
 return {saveMeetInfo, getAllMapDataForCurrentMeet, getMeetInfoByUid, getCurrentMeet, editMeetInfo, updateMeet, deleteMeet};
 
 });
