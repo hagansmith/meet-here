@@ -61,6 +61,10 @@ const editMarkerInfo2 = (meet, originalMeet, meetMarkers) => {
 }
 };
 
-return {saveMarkerInfo, getMarkersByMeetId, editMarkerInfo1, editMarkerInfo2};
+const deleteMarker = (markerId) => {
+  return $http.delete(`${FIREBASE_CONFIG.databaseURL}/markers/${markerId}.json`);
+};
+
+return {saveMarkerInfo, getMarkersByMeetId, deleteMarker, editMarkerInfo1, editMarkerInfo2};
 
 });
