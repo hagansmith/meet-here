@@ -1,7 +1,6 @@
 app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams, $scope, AuthService, LocationService, MapService, MeetService){
   $scope.meet = {};
   $scope.meetAddress = {};
-  console.log("uid", $rootScope.uid);
   let userUid = $rootScope.uid;
   let midPoint = {};
 

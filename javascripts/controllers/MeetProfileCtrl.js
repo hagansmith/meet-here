@@ -2,13 +2,12 @@
 
 app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthService, MapService, MeetService, MarkerService, LocationService){
    $scope.meets = {};
-   console.log("uid in profile", $rootScope.uid);
    let userUid = $rootScope.uid;
 
    const authCheck = () => {
      let uid = AuthService.getCurrentUid();
      if (!uid){
-       return; 
+       return;
     } else {
       loadMeetProfile();
     }
