@@ -41,10 +41,7 @@ getSingleMeet();
         var map;
         var service;
         var infowindow;
-        map = new google.maps.Map(document.getElementById('map'), {
-        // zoom: 12,
-        // center: {lat: 41.850033, lng: -87.6500523},
-        });
+        map = new google.maps.Map(document.getElementById('map'));
 
       map.controls[google.maps.ControlPosition.TOP_CENTER].push(
           document.getElementById('info'));
@@ -54,7 +51,7 @@ getSingleMeet();
         draggable: true,
         position: {lat: results.marker1.lat, lng: results.marker1.lng}
       });
-      //markers are not returning an setting by page load?
+
       let marker2 = new google.maps.Marker({
         map: map,
         draggable: true,
@@ -76,23 +73,12 @@ getSingleMeet();
           marker1.getPosition(), marker2.getPosition());
       map.fitBounds(bounds);
 
-      // google.maps.event.addListener(marker1, 'position_changed', update);
-      // google.maps.event.addListener(marker2, 'position_changed', update);
-
       let poly = new google.maps.Polyline({
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
         strokeWeight: 3,
         map: map,
       });
-
-      // geodesicPoly = new google.maps.Polyline({
-      //   strokeColor: '#CC0099',
-      //   strokeOpacity: 1.0,
-      //   strokeWeight: 3,
-      //   geodesic: true,
-      //   map: map
-      // });
 
       var cityCircle = new google.maps.Circle(
         {
@@ -106,8 +92,6 @@ getSingleMeet();
             radius: 500
           }
         );
-
-      //update();
 
         map = new google.maps.Map(document.getElementById('map'), {
           center: location,
@@ -162,23 +146,14 @@ getSingleMeet();
             });
           }
 
-  resolve (midPoint);
-
-      // function update() {
-      //   var path = [marker1.getPosition(), marker2.getPosition()];
-      //   poly.setPath(path);
-      //   // geodesicPoly.setPath(path);
-      //   var heading = google.maps.geometry.spherical.computeHeading(path[0], path[1]);
-      //   document.getElementById('heading').value = heading;
-      //   document.getElementById('origin').value = path[0].toString();
-      //   document.getElementById('destination').value = path[1].toString();
-      // }
+          resolve (midPoint);
       });
     });
   };
 
   $scope.saveDetail = (meet) => {
-    if (!userUid){
+    let uid = AuthService.getCurrentUid();
+    if (!uid){
       AuthService.authenticateGoogle().then((result)=>{
         $rootScope.uid = result.user.uid;
         userUid = result.user.uid;
