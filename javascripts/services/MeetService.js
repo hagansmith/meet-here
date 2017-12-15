@@ -75,6 +75,7 @@ const updateMeet = (meet, meetId, userUid) => {
 };
 
   const deleteMeet = (meetId) => {
+    console.log("meet to delete", meetId);
     return $http.delete(`${FIREBASE_CONFIG.databaseURL}/meets/${meetId}.json`);
   };
 

@@ -1,6 +1,6 @@
 
 
-app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService, MeetService){
+app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService, MeetService, MarkerService, LocationService){
    $scope.meets = {};
    let userUid = $rootScope.uid;
    const loadMeetProfile = ( ) => {
@@ -29,7 +29,12 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapSer
    };
 
    $scope.eraseMeet = (meetid) => {
-     MeetService.deleteMeet(meetid);
+     MeetService.getAllMapDataForCurrentMeet(meetid).then((results)=>{
+       MarkerService.deleteMarker(results.marker1.id);
+       MarkerService.deleteMarker(results.marker2.id);
+       LocationService.deleteLocation(results.location.id);
+       MeetService.deleteMeet(meetid);
+     });
      loadMeetProfile();
    };
 

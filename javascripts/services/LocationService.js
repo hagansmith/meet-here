@@ -22,6 +22,10 @@ const getMeetLocationsByMeetId = (meetId) => {
   });
 };
 
-return {saveLocationInfo, getMeetLocationsByMeetId};
+const deleteLocation = (locationId) => {
+  return $http.delete(`${FIREBASE_CONFIG.databaseURL}/meetLocations/${locationId}.json`);
+};
+
+return {deleteLocation, saveLocationInfo, getMeetLocationsByMeetId};
 
 });
