@@ -11,7 +11,7 @@ app.run(function($location, $rootScope, FIREBASE_CONFIG, MAP_CONFIG, AuthService
   //currRoute is information about your current route
   //prevRoute is information about the route you came from
   $rootScope.$on('$routeChangeStart', function(event, currRoute, prevRoute) {
-    // checks to see if there is a current user
+    // checks to see if there is a cookie with a uid for this app in local storage
       let logged = AuthService.isAuthenticated();
       if (!logged) {
         $rootScope.navbar = false;
@@ -27,7 +27,6 @@ app.config(function( $locationProvider, $routeProvider ){
   $routeProvider
     .when("/NewMeet", {
       templateUrl: 'partials/newMeet.html',
-      controller: 'NewMeetCtrl'
 
     } )
     .when("/MeetNow", {

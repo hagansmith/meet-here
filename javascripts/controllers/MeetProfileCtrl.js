@@ -1,19 +1,28 @@
 
 
-app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, MapService, MeetService, MarkerService, LocationService){
+app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthService, MapService, MeetService, MarkerService, LocationService){
    $scope.meets = {};
+   console.log("uid in profile", $rootScope.uid);
    let userUid = $rootScope.uid;
+
+   const authCheck = () => {
+     let uid = AuthService.getCurrentUid();
+     if (!uid){
+       return; 
+    } else {
+      loadMeetProfile();
+    }
+  };
+
    const loadMeetProfile = ( ) => {
-     if (userUid) {
        MeetService.getMeetInfoByUid($rootScope.uid).then((results) => {
           $scope.meets = results;
        }).catch((err)=>{
          console.log("error in meet profile controller loadMeetProfile", err);
        });
-     }
    };
 
-   loadMeetProfile();
+   authCheck();
 
    $scope.editMeet = (meet) => {
     let meetId =  meet.marker1.meetid;
