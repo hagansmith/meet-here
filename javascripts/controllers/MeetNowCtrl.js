@@ -51,20 +51,36 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
         /** @type {!HTMLInputElement} */(document.getElementById("autocomplete")),
         {types: ['geocode']});
 
+        // let autocomplete2 = new google.maps.places.Autocomplete(
+        //   /** @type {!HTMLInputElement} */(document.getElementById("autocomplete2")),
+        //   {types: ['geocode']});
+
       // When the user selects an address from the dropdown, populate the address
      // fields in the form.
      const fillInAddress = () => {
        // Get the place details from the autocomplete object.
-       var place = autocomplete.getPlace();
-       let place1 = place.geometry.location.lat();
-       let place2 =place.geometry.location.lng();
-       meetMarkers.marker2 = {lat: place1, lng:place2};
-       newMeet.marker2 = {lat: place1, lng:place2};
-       var val = place.formatted_address;
-       $scope.meet.marker2 = val;
-       };
-       autocomplete.addListener('place_changed', fillInAddress);
+         //info for autocomplete
+        var place = autocomplete.getPlace();
+        let place1 = place.geometry.location.lat();
+        let place2 =place.geometry.location.lng();
+        meetMarkers.marker2 = {lat: place1, lng:place2};
+        newMeet.marker2 = {lat: place1, lng:place2};
+        var val = place.formatted_address;
+        $scope.meet.marker2 = val;
+      };
+      // const fillInAddress2 = () => {
+      // //info for autocomplete2
+      //   var place = autocomplete2.getPlace();
+      //   let place1 = place.geometry.location.lat();
+      //   let place2 =place.geometry.location.lng();
+      //   meetMarkers.marker1 = {lat: place1, lng:place2};
+      //   newMeet.marker1 = {lat: place1, lng:place2};
+      //   var val = place.formatted_address;
+      //   $scope.meet.marker1 = val;
+      // };
 
+       autocomplete.addListener('place_changed', fillInAddress);
+       // autocomplete2.addListener('place_changed', fillInAddress2);
      // Bias the autocomplete object to the user's geographical location,
      // as supplied by the browser's 'navigator.geolocation' object.
     geolocate = () => {

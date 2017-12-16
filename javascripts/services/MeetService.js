@@ -80,6 +80,7 @@ const updateMeet = (meet, meetId, userUid) => {
   };
 
   const getAllMapDataForCurrentMeet = (meetId) => {
+    if (meetId) {
     let meetData = {};
       return $q((resolve, reject) => {
         return getCurrentMeet(meetId).then((meet) => {
@@ -108,6 +109,9 @@ const updateMeet = (meet, meetId, userUid) => {
       }).catch((error) => {
         console.log("error in service getAllMapDataForCurrentMeet", error);
       });
+    } else {
+      return;
+    }
     };
 
 return {saveMeetInfo, getAllMapDataForCurrentMeet, getMeetInfoByUid, getCurrentMeet, editMeetInfo, updateMeet, deleteMeet};
