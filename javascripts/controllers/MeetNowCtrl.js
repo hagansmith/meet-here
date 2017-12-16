@@ -1,12 +1,10 @@
-
-
 app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $scope, MeetService, MarkerService, MapService){
 
   let meetMarkers = {};
   let originalMeet;
   let newMeet = {};
 
-  // use current location to fill in address
+    // use current location to fill in address
     $scope.useCurrentLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -101,20 +99,20 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
    });
   };
 
-    const getSingleMeet = () => {
-      MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
-        originalMeet = results;
-        // Create a formatted object for use by ng-model. This format is required to make the data match the original form
-        let  formattedresults = {
-          "marker1": results.marker1.address,
-          "marker2": results.marker2.address,
-          "routeBy": results.routeBy,
-          "where": results.where,
-          "name": results.name,
-          "min": results.when,
-          "edit":true,
-          "place": results.place
-        };
+  const getSingleMeet = () => {
+    MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+      originalMeet = results;
+      // Create a formatted object for use by ng-model. This format is required to make the data match the original form
+      let  formattedresults = {
+        "marker1": results.marker1.address,
+        "marker2": results.marker2.address,
+        "routeBy": results.routeBy,
+        "where": results.where,
+        "name": results.name,
+        "min": results.when,
+        "edit":true,
+        "place": results.place
+      };
       $scope.meet=formattedresults;
       meetMarkers = {
         marker1: {

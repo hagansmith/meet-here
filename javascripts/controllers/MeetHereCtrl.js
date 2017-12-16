@@ -4,35 +4,35 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
   let userUid = $rootScope.uid;
   let midPoint = {};
 
- const getSingleMeet = () => {
-   return $q((resolve, reject) => {
-     MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
-       $scope.meet=results;
-       return $q((resolve, reject) => {
-         gMaps(results).then(()=> {
-           let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
-           return $q((resolve, reject) => {
-             MapService.directions($scope.meet, middy).then((directions)=> {
-               $scope.duration = directions.data.routes["0"].legs["0"].duration.text;
-               return MapService.reverseGeocode(middy).then((address) => {
-                 $scope.meetAddress = address.data.results[0].formatted_address;
-                 $scope.meet.location.address = address.data.results[0].formatted_address;
+  const getSingleMeet = () => {
+     return $q((resolve, reject) => {
+       MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
+         $scope.meet=results;
+         return $q((resolve, reject) => {
+           gMaps(results).then(()=> {
+             let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
+             return $q((resolve, reject) => {
+               MapService.directions($scope.meet, middy).then((directions)=> {
+                 $scope.duration = directions.data.routes["0"].legs["0"].duration.text;
+                 return MapService.reverseGeocode(middy).then((address) => {
+                   $scope.meetAddress = address.data.results[0].formatted_address;
+                   $scope.meet.location.address = address.data.results[0].formatted_address;
+                 });
                });
+             }).catch((error)=> {
+                console.log("error in directions", error);
              });
-           }).catch((error)=> {
-              console.log("error in directions", error);
            });
+         }).catch((error) => {
+           console.log("error in get single meet gMaps", error);
          });
-       }).catch((error) => {
-         console.log("error in get single meet gMaps", error);
        });
-     });
-   }).catch((error)=>{
-      console.log("error in getSingleMeet", error);
-  });
-};
+     }).catch((error)=>{
+        console.log("error in getSingleMeet", error);
+    });
+  };
 
-getSingleMeet();
+  getSingleMeet();
 
   // use meet coordinates to calculate midpoint coordinates
   const gMaps = (results) => {
@@ -173,18 +173,18 @@ getSingleMeet();
   };
 
   $scope.directionsDisp = (meet, value) => {
-  var directionsDisplay;
-  var directionsService = new google.maps.DirectionsService();
-  var map;
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var map;
 
-  directionsDisplay = new google.maps.DirectionsRenderer();
-  var location = new google.maps.LatLng(meet.location.lat, meet.location.lng);
-  var mapOptions = {
-    zoom:7,
-    center: location
-  };
-  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  directionsDisplay.setMap(map);
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    var location = new google.maps.LatLng(meet.location.lat, meet.location.lng);
+    var mapOptions = {
+      zoom:7,
+      center: location
+    };
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    directionsDisplay.setMap(map);
 
 
   function calcRoute(meet, value) {
