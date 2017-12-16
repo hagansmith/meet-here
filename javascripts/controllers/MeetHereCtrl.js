@@ -14,9 +14,11 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
              return $q((resolve, reject) => {
                MapService.directions($scope.meet, middy).then((directions)=> {
                  $scope.duration = directions.data.routes["0"].legs["0"].duration.text;
-                 // if (parseInt($scope.duration.split(" ")[0]) > parseInt($scope.meet.when.split(" ")[0])) {
-                 //   alert("you will never make it");
-                 // }
+                 if ($scope.meet.when) {
+                   if (parseInt($scope.duration.split(" ")[0]) > parseInt($scope.meet.when.split(" ")[0])) {
+                     alert("you will never make it");
+                   }
+                 }
                  return MapService.reverseGeocode(middy).then((address) => {
                    $scope.meetAddress = address.data.results[0].formatted_address;
                    $scope.meet.location.address = address.data.results[0].formatted_address;
