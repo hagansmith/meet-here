@@ -7,13 +7,18 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
   const getSingleMeet = () => {
      return $q((resolve, reject) => {
        MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
-         $scope.meet=results;
+        $scope.meet=results;
          return $q((resolve, reject) => {
            gMaps(results).then(()=> {
              let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
              return $q((resolve, reject) => {
                MapService.directions($scope.meet, middy).then((directions)=> {
                  $scope.duration = directions.data.routes["0"].legs["0"].duration.text;
+                 if ($scope.meet.when) {
+                   if (parseInt($scope.duration.split(" ")[0]) > parseInt($scope.meet.when.split(" ")[0])) {
+                     alert("you will never make it");
+                   }
+                 }
                  return MapService.reverseGeocode(middy).then((address) => {
                    $scope.meetAddress = address.data.results[0].formatted_address;
                    $scope.meet.location.address = address.data.results[0].formatted_address;
@@ -57,8 +62,11 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
         draggable: true,
         position: {lat: results.marker2.lat, lng: results.marker2.lng}
       });
-
-      midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), ".5" );
+      if (results.where) {
+        midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), results .where);
+      } else {
+        midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), ".5");
+      }
       $scope.meet.location = {
         "lat": midPoint.lat(),
         "lng": midPoint.lng()
@@ -100,7 +108,7 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
 
         var request = {
           location: location,
-          radius: '1000',
+          radius: '1500',
           type: [$scope.meet.place]
         };
 
@@ -145,7 +153,6 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
               infowindow.open(map, this);
             });
           }
-
           resolve (midPoint);
       });
     });

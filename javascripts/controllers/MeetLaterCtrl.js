@@ -33,8 +33,11 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
       meet.history = true;
       MeetService.saveMeetInfo(meet).then((result)=> {
           let meetId = result.data.name;
-          MarkerService.saveMarkerInfo(meet, meetMarkers, meetId);
+          MarkerService.saveMarkerInfo(meet, meetMarkers, meetId).then(()=>{
           $location.path(`/MeetHere/${meetId}`);
+        }).catch((error) => {
+          console.log("error in conroller, meetNowDetails Save Marker Info");
+          });
     }).catch((error) => {
       console.log("error in controller, meetNowDetails", error);
     });
@@ -90,7 +93,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
      let  formattedresults = {
        "marker1": results.marker1.address,
        "marker2": results.marker2.address,
-       "routeBy": results.routeBy,
+       "routeBy": "distance",
        "where": results.where,
        "name": results.name,
        "min": results.when,

@@ -33,8 +33,11 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
     meet.history = true;
     MeetService.saveMeetInfo(meet).then((result)=> {
       let meetId = result.data.name;
-      MarkerService.saveMarkerInfo(meet, meetMarkers, meetId);
+      MarkerService.saveMarkerInfo(meet, meetMarkers, meetId).then(()=>{
       $location.path(`/MeetHere/${meetId}`);
+    }).catch((error) => {
+      console.log("error in conroller, meetNowDetails Save Marker Info");
+      });
     }).catch((error) => {
       console.log("error in controller, meetNowDetails", error);
     });
