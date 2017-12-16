@@ -4,7 +4,7 @@
      <div id="map"></div>
      <div id="meetDetails" >
        <h3>{{meetAddress}}</h3>
-       <p> You are coming from {{meet.marker1.address}} and you are meeting someone coming from {{meet.marker2.address}}. You are meeting in the middle based on distance and it will take you {{duration}}.</p>
+       <p> You are coming from {{meet.marker1.address}} and you are meeting someone coming from {{meet.marker2.address}}. It will take you {{duration}}.</p>
        <div class="text-center" id=googleDirections>
        <a ng-href="https://www.google.com/maps/dir/?api=1&origin={{meet.marker1.address}}&destination={{meet.location.address}}">Get Your Directions (opens in google maps)</a> |
       <a ng-href="https://www.google.com/maps/dir/?api=1&origin={{meet.marker2.address}}&destination={{meet.location.address}}">Get Their Directions (opens in google maps)</a>

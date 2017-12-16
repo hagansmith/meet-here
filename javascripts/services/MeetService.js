@@ -5,7 +5,7 @@ app.service("MeetService", function ($http, $q, FIREBASE_CONFIG, LocationService
 const saveMeetInfo = (meet) => {
   let meetObject = {
     "history": meet.history,
-    "routeBy": meet.routeBy,
+    "routeBy": "distance",
     "uid": meet.uid,
     "where": meet.where,
     "name": meet.name,
@@ -63,7 +63,7 @@ const editMeetInfo = (meet, originalMeet) => {
 const updateMeet = (meet, meetId, userUid) => {
   let meetObject = {
     "history": meet.history,
-    "routeBy": meet.routeBy,
+    "routeBy": "distance",
     "uid": userUid,
     "where": meet.where,
     "saved": meet.saved,
