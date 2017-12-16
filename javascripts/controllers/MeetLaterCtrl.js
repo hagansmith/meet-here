@@ -22,7 +22,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
     }
   };
 
-// Save meet details
+  // Save meet details
   $scope.meetLaterDetails = (meet) => {
     // check for a user uid if no id then assign id of randomUid
     if (!$rootScope.uid) {
@@ -40,7 +40,7 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
     });
   };
 
-// Autocomplete address
+  // Autocomplete address
   const InitAutocomplete = () => {
     GoogleMapsLoader.load(function(google) {
     // Create the autocomplete object, restricting the search to geographical

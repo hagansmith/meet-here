@@ -1,5 +1,3 @@
-
-
 app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthService, MapService, MeetService, MarkerService, LocationService){
    $scope.meets = {};
    let userUid = $rootScope.uid;

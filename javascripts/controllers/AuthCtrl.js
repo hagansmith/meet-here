@@ -11,4 +11,5 @@ app.controller("AuthCtrl", function($location, $rootScope, $scope, AuthService){
     console.log("error in auth google", error);
   });
   };
+
 });
