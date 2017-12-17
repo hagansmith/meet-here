@@ -1,6 +1,8 @@
 app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthService, MapService, MeetService, MarkerService, LocationService){
    $scope.meets = {};
    let userUid = $rootScope.uid;
+   console.log("userUID", userUid);
+   console.log("uid", $rootScope.uid);
 
    const authCheck = () => {
      let userUid = AuthService.getCurrentUid();
@@ -11,6 +13,8 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthSe
     }
   };
 
+
+
    const loadMeetProfile = ( ) => {
        MeetService.getMeetInfoByUid($rootScope.uid).then((results) => {
           $scope.meets = results;
@@ -19,7 +23,7 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthSe
        });
    };
 
-   authCheck();
+  authCheck();
 
    $scope.editMeet = (meet) => {
     let meetId =  meet.marker1.meetid;
@@ -36,19 +40,24 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthSe
 
    $scope.eraseMeet = (meetid) => {
      MeetService.getAllMapDataForCurrentMeet(meetid).then((results)=>{
-       MarkerService.deleteMarker(results.marker1.id);
-       MarkerService.deleteMarker(results.marker2.id);
-       LocationService.deleteLocation(results.location.id);
-       MeetService.deleteMeet(meetid);
-     });
+       MarkerService.deleteMarker(results.marker1.id).then(()=>{
+         MarkerService.deleteMarker(results.marker2.id).then(()=>{
+           LocationService.deleteLocation(results.location.id).then(()=>{
+             MeetService.deleteMeet(meetid);
+           });
+         });
+       });
+     }).then(()=>{
      loadMeetProfile();
+    });
    };
 
    $scope.saveMeet = (meet) => {
      meet.saved = true;
      let meetId = meet.marker1.meetid;
-     MeetService.updateMeet(meet, meetId);
+     MeetService.updateMeet(meet, meetId).then(()=>{
      loadMeetProfile();
+   });
    };
 
  });

@@ -171,11 +171,11 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
   };
 
   $scope.saveDetail = (meet) => {
-    let uid = AuthService.getCurrentUid();
-    if (!uid){
+    if (!userUid){
       AuthService.authenticateGoogle().then((result)=>{
         $rootScope.uid = result.user.uid;
         userUid = result.user.uid;
+      }).then(()=>{
         saveMeet(meet);
       });
     } else {
@@ -187,12 +187,16 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
     let meetId = $routeParams.id;
     if (!meet.saved) {
       meet.saved = true;
-      MeetService.updateMeet(meet, meetId, userUid);
-      LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress);
+      MeetService.updateMeet(meet, meetId, userUid).then(() => {
+        LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress).then(() => {
+          $location.url("/Profile");
+        });
+      });
     } else {
-      LocationService.updateLocationInfo(meetId, midPoint, locationId, $scope.meetAddress);
+      LocationService.updateLocationInfo(meetId, midPoint, locationId, $scope.meetAddress).then(() => {
+            $location.url("/Profile");
+      });
     }
-    $location.url("/Profile");
   };
 
   $scope.directionsDisp = (meet, value) => {
