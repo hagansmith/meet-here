@@ -119,34 +119,35 @@ app.controller("MeetLaterCtrl", function($location, $routeParams, $rootScope, $s
    }).catch((error)=>{
       console.log("error in getSingleMeet", error);
     });
-};
+  };
 
-const editMeet = () => {
-  if (!$routeParams.id) {
-    InitAutocomplete();
-  } else {
-     getSingleMeet();
-  }
-};
+  const editMeet = () => {
+    if (!$routeParams.id) {
+      InitAutocomplete();
+    } else {
+       getSingleMeet();
+    }
+  };
 
-editMeet();
+  editMeet();
 
-// Update meet details
-$scope.updateMeetLaterDetails = (meet) => {
-   $scope.meet = meet;
-  MeetService.editMeetInfo(meet, originalMeet);
-  if (meet.marker1) {
-  MarkerService.editMarkerInfo1(meet, originalMeet, newMeet);
- }
- if (meet.marker2) {
-     MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
-  }
-    meetId = $routeParams.id;
-  $location.path(`/MeetHere/${meetId}`);
-};
+  // Update meet details
+  $scope.updateMeetLaterDetails = (meet) => {
+    $scope.meet = meet;
+    MeetService.editMeetInfo(meet, originalMeet).then(() => {
+      if (meet.marker1) {
+        MarkerService.editMarkerInfo1(meet, originalMeet, newMeet);
+      }
+      if (meet.marker2) {
+          MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
+      }
+      meetId = $routeParams.id;
+      $location.path(`/MeetHere/${meetId}`);
+    });
+  };
 
-$scope.places = [
-  "airport", "amusement_park", "aquarium", "art_gallery", "atm", "bakery", "bank", "bar", "beauty_salon", "book_store", "bowling_alley", "bus_station", "cafe", "campground", "casino","cemetery", "church", "city_hall", "clothing_store", "convenience_store", "courthouse", "department_store", "embassy", "gas_station", "library", "lodging", "movie_theater", "museum", "night_club", "park", "parking", "restaurant",  "rv_park", "shopping_mall", "store", "subway_station", "university", "zoo"
-];
+  $scope.places = [
+    "airport", "amusement_park", "aquarium", "art_gallery", "atm", "bakery", "bank", "bar", "beauty_salon", "book_store", "bowling_alley", "bus_station", "cafe", "campground", "casino","cemetery", "church", "city_hall", "clothing_store", "convenience_store", "courthouse", "department_store", "embassy", "gas_station", "library", "lodging", "movie_theater", "museum", "night_club", "park", "parking", "restaurant",  "rv_park", "shopping_mall", "store", "subway_station", "university", "zoo"
+  ];
 
 });
