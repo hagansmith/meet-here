@@ -3,11 +3,24 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
   $scope.meetAddress = {};
   let userUid = $rootScope.uid;
   let midPoint = {};
+  let locationId;
+
+  const authCheck = () => {
+    let userUid = AuthService.getCurrentUid();
+    if (!userUid){
+      return;
+   }
+  };
+
+  authCheck();
 
   const getSingleMeet = () => {
      return $q((resolve, reject) => {
        MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
         $scope.meet=results;
+          if (results.location.id) {
+            locationId = results.location.id
+          };
          return $q((resolve, reject) => {
            gMaps(results).then(()=> {
              let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
@@ -175,7 +188,11 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
     meet.saved = true;
     let meetId = $routeParams.id;
     MeetService.updateMeet(meet, meetId, userUid);
-    LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress);
+    if (!meet.saved) {
+      LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress);
+    } else {
+      LocationService.updateLocationInfo(meetId, midPoint, locationId, $scope.meetAddress);
+    }
     $location.url("/Profile");
   };
 

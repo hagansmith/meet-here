@@ -24,6 +24,16 @@ app.service("LocationService", function ($http, $q, FIREBASE_CONFIG){
     return $http.delete(`${FIREBASE_CONFIG.databaseURL}/meetLocations/${locationId}.json`);
   };
 
-  return {deleteLocation, saveLocationInfo, getMeetLocationsByMeetId};
+  const updateLocationInfo = (meetId, midpoint, locationId, meetAddress) => {
+    let locationObject = {
+      "meetid" : meetId,
+      "lat" : midpoint.lat(),
+      "lng" : midpoint.lng(),
+      "address" : meetAddress
+    };
+    return $http.put(`${FIREBASE_CONFIG.databaseURL}/meetLocations/${locationId}.json`, JSON.stringify(locationObject));
+  };
+
+  return {deleteLocation, saveLocationInfo, getMeetLocationsByMeetId, updateLocationInfo};
 
 });

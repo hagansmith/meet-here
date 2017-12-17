@@ -3,8 +3,8 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthSe
    let userUid = $rootScope.uid;
 
    const authCheck = () => {
-     let uid = AuthService.getCurrentUid();
-     if (!uid){
+     let userUid = AuthService.getCurrentUid();
+     if (!userUid){
        return;
     } else {
       loadMeetProfile();
