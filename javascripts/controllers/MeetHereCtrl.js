@@ -18,9 +18,9 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
      return $q((resolve, reject) => {
        MeetService.getAllMapDataForCurrentMeet($routeParams.id).then((results)=>{
         $scope.meet=results;
-          if (results.location.id) {
-            locationId = results.location.id
-          };
+          if (results.location) {
+            locationId = results.location.id;
+          }
          return $q((resolve, reject) => {
            gMaps(results).then(()=> {
              let middy =  {lat:midPoint.lat(), lng:midPoint.lng()};
