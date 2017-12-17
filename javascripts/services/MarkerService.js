@@ -44,7 +44,7 @@ app.service("MarkerService", function ($http, $q, FIREBASE_CONFIG){
     }
   };
 
-  const editMarkerInfo2 = (meet, originalMeet, meetMarkers) => {
+  const editMarkerInfo2 = (meet, originalMeet, meetMarkers, newMeet) => {
     let marker2 = originalMeet.marker2.id;
     if (!meetMarkers.marker2) {
       return;

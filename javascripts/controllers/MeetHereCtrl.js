@@ -6,10 +6,9 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
   let locationId;
 
   const authCheck = () => {
-    let userUid = AuthService.getCurrentUid();
     if (!userUid){
-      return;
-   }
+      let userUid = AuthService.getCurrentUid();
+    }
   };
 
   authCheck();
@@ -185,10 +184,10 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
   };
 
   const saveMeet = (meet) => {
-    meet.saved = true;
     let meetId = $routeParams.id;
-    MeetService.updateMeet(meet, meetId, userUid);
     if (!meet.saved) {
+      meet.saved = true;
+      MeetService.updateMeet(meet, meetId, userUid);
       LocationService.saveLocationInfo(midPoint, meetId, $scope.meetAddress);
     } else {
       LocationService.updateLocationInfo(meetId, midPoint, locationId, $scope.meetAddress);

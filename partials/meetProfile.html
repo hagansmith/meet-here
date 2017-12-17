@@ -11,11 +11,11 @@
             <a  class="col-md-1 text-right" ng-click = "viewMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a>
             <p class="meetName col-md-3">{{meet.name}}</p>
             <p class="col-md-5 text-left">{{meet.location.address}}</p>
-            <a class ="col-md-1" ng-click = "saveMeet(meet)">Save</a>
+            <a class ="col-md-1" ng-click="saveMeet(meet)" ng-hide="meet.saved">Save</a>
             <a class="erase col-md-1" ng-click = "eraseMeet(meet.marker1.meetid)">Remove</a>
           </div>
           <div class="locationInfo container-fluid">
-            <h5 class="row col-md-offset-1">Location 1 {{meet.marker1.address}} | Location 2: {{meet.marker2.address}}
+            <h5 class="row col-md-offset-1">Location 1: {{meet.marker1.address}} | Location 2: {{meet.marker2.address}}
             <hr>
           </div>
         </div>
@@ -33,7 +33,7 @@
             <a class="erase col-md-1" ng-click = "eraseMeet(meet.marker1.meetid)"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span></a>
           </div>
           <div class="locationInfo container-fluid">
-            <h5 class="row col-md-offset-1">Location 1 {{meet.marker1.address}} | Location 2: {{meet.marker2.address}}
+            <h5 class="row col-md-offset-1">Location 1: {{meet.marker1.address}} | Location 2: {{meet.marker2.address}}
             <hr>
           </div>
         </div>
