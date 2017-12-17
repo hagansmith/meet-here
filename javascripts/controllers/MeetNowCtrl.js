@@ -135,14 +135,14 @@ app.controller("MeetNowCtrl", function($location, $routeParams, $rootScope, $sco
 
    // Update meet details
    $scope.updateMeetNowDetails = (meet) => {
-      $scope.meet = meet;
-     MeetService.editMeetInfo(meet, originalMeet);
-     if (meet.marker1) {
+    $scope.meet = meet;
+    MeetService.editMeetInfo(meet, originalMeet);
+    if (meet.marker1) {
      MarkerService.editMarkerInfo1(meet, originalMeet, newMeet);
     }
     if (meet.marker2) {
-        MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
-     }
+      MarkerService.editMarkerInfo2(meet, originalMeet, newMeet);
+    }
        meetId = $routeParams.id;
      $location.path(`/MeetHere/${meetId}`);
    };
