@@ -10,7 +10,7 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthSe
       loadMeetProfile();
     }
   };
-  
+
    const loadMeetProfile = ( ) => {
        MeetService.getMeetInfoByUid($rootScope.uid).then((results) => {
           $scope.meets = results;
@@ -36,16 +36,19 @@ app.controller("MeetProfileCtrl", function($location, $rootScope, $scope, AuthSe
 
    $scope.eraseMeet = (meetid) => {
      MeetService.getAllMapDataForCurrentMeet(meetid).then((results)=>{
-       MarkerService.deleteMarker(results.marker1.id).then(()=>{
-         MarkerService.deleteMarker(results.marker2.id).then(()=>{
-           LocationService.deleteLocation(results.location.id).then(()=>{
-             MeetService.deleteMeet(meetid);
-           });
+       MeetService.deleteMeet(meetid);
+        MarkerService.deleteMarker(results.marker1.id).then(()=>{
+          MarkerService.deleteMarker(results.marker2.id).then(()=>{
+            if (results.location){
+              LocationService.deleteLocation(results.location.id).then(()=>{
+                loadMeetProfile();
+              });
+            } else {
+              loadMeetProfile();
+            }
          });
        });
-     }).then(()=>{
-     loadMeetProfile();
-    });
+     })
    };
 
    $scope.saveMeet = (meet) => {
