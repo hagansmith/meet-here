@@ -75,7 +75,7 @@ app.controller("MeetHereCtrl", function($location, $q, $rootScope, $routeParams,
         position: {lat: results.marker2.lat, lng: results.marker2.lng}
       });
       if (results.where) {
-        midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), results .where);
+        midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), results.where);
       } else {
         midPoint = google.maps.geometry.spherical.interpolate(marker1.getPosition(), marker2.getPosition(), ".5");
       }

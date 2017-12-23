@@ -1,0 +1,145 @@
+{
+  "markers" : {
+    "-L0_KpSbUUNOcrkPWVNx" : {
+      "address" : "417 Battle Ave, Franklin, TN 37064, USA",
+      "lat" : 35.9127095,
+      "lng" : -86.88358079999999,
+      "meetid" : "-L0_KpQ5jX4d9wWOro-c"
+    },
+    "-L0_KpTsoWhRixsVvXRM" : {
+      "address" : "101 Creekside Crossing, Brentwood, TN 37027, USA",
+      "lat" : 36.0368824,
+      "lng" : -86.79938349999998,
+      "meetid" : "-L0_KpQ5jX4d9wWOro-c"
+    },
+    "-L0_L-0LlcepKkeRtEMC" : {
+      "address" : "417 Battle Ave, Franklin, TN 37064, USA",
+      "lat" : 35.9126829,
+      "lng" : -86.88363,
+      "meetid" : "-L0_KzyoZL4Ll5TdyXSF"
+    },
+    "-L0_L-1b6GdqPrMB6dgM" : {
+      "address" : "1010 Murfreesboro Rd, Franklin, TN 37064, USA",
+      "lat" : 35.9158546,
+      "lng" : -86.83901589999999,
+      "meetid" : "-L0_KzyoZL4Ll5TdyXSF"
+    },
+    "-L0_LH7jKh89fFaxnkQH" : {
+      "address" : "417 Battle Ave, Franklin, TN 37064, USA",
+      "lat" : 35.9127637,
+      "lng" : -86.8836595,
+      "meetid" : "-L0_LH5HV9z5459rZW7g"
+    },
+    "-L0_LH8y9GTeDxwj7yrp" : {
+      "address" : "Athens, GA, USA",
+      "lat" : 33.9519347,
+      "lng" : -83.35756700000002,
+      "meetid" : "-L0_LH5HV9z5459rZW7g"
+    },
+    "-L0_LQPU6438hrSCcukB" : {
+      "address" : "417 Battle Ave, Franklin, TN 37064, USA",
+      "lat" : 35.9127116,
+      "lng" : -86.88364469999999,
+      "meetid" : "-L0_LQN-ILryI3ijmFx6"
+    },
+    "-L0_LQQkuz3wJfANTFEy" : {
+      "address" : "Athens, GA, USA",
+      "lat" : 33.9519347,
+      "lng" : -83.35756700000002,
+      "meetid" : "-L0_LQN-ILryI3ijmFx6"
+    },
+    "-L0_Lf0F-_bZ_lFltDHZ" : {
+      "address" : "417 Battle Ave, Franklin, TN 37064, USA",
+      "lat" : 35.9126815,
+      "lng" : -86.8836271,
+      "meetid" : "-L0_LeyY2Gx4tculih7V"
+    },
+    "-L0_Lf1ZFhqWjeps-OQB" : {
+      "address" : "233 Blackman Rd, Nashville, TN 37211, USA",
+      "lat" : 36.073806,
+      "lng" : -86.73656799999998,
+      "meetid" : "-L0_LeyY2Gx4tculih7V"
+    }
+  },
+  "meetLocations" : {
+    "-L0_L2LOfh36IAmSb-sk" : {
+      "address" : "126 Ewingville Dr, Franklin, TN 37064, USA",
+      "lat" : 35.91427081292559,
+      "lng" : -86.8613233971729,
+      "meetid" : "-L0_KzyoZL4Ll5TdyXSF"
+    },
+    "-L0_LIm699j3EhmVI9Zw" : {
+      "address" : "182 Mountain Ln, Ringgold, GA 30736, USA",
+      "lat" : 34.945084166237734,
+      "lng" : -85.09953351266262,
+      "meetid" : "-L0_LH5HV9z5459rZW7g"
+    },
+    "-L0_LRsIfVjMu1ad_6ma" : {
+      "address" : "50 Casandra Ln, Dawsonville, GA 30534, USA",
+      "lat" : 34.45158448033705,
+      "lng" : -84.22336843011158,
+      "meetid" : "-L0_LQN-ILryI3ijmFx6"
+    },
+    "-L0_Lg22vJikiRHJ4eJf" : {
+      "address" : "Longstreet Dr, Brentwood, TN 37027, USA",
+      "lat" : 35.993266184373546,
+      "lng" : -86.8101726473704,
+      "meetid" : "-L0_LeyY2Gx4tculih7V"
+    }
+  },
+  "meets" : {
+    "-L0_KpQ5jX4d9wWOro-c" : {
+      "history" : true,
+      "name" : "A short unsaved meet.",
+      "place" : "bank",
+      "routeBy" : "distance",
+      "uid" : "c0Mc4LvvGWTiqAzrlBQLK2Iwrh43",
+      "when" : "5 min"
+    },
+    "-L0_KzyoZL4Ll5TdyXSF" : {
+      "history" : true,
+      "name" : "A short saved meed.",
+      "place" : "church",
+      "routeBy" : "distance",
+      "saved" : true,
+      "uid" : "c0Mc4LvvGWTiqAzrlBQLK2Iwrh43",
+      "when" : "15 min"
+    },
+    "-L0_LH5HV9z5459rZW7g" : {
+      "history" : true,
+      "name" : "A long meet in the middle.",
+      "place" : "park",
+      "routeBy" : "distance",
+      "saved" : true,
+      "uid" : "c0Mc4LvvGWTiqAzrlBQLK2Iwrh43",
+      "where" : ".5"
+    },
+    "-L0_LQN-ILryI3ijmFx6" : {
+      "history" : true,
+      "name" : "A long meet closer to you.",
+      "place" : "park",
+      "routeBy" : "distance",
+      "saved" : true,
+      "uid" : "c0Mc4LvvGWTiqAzrlBQLK2Iwrh43",
+      "where" : ".75"
+    },
+    "-L0_LeyY2Gx4tculih7V" : {
+      "history" : true,
+      "name" : "An edited meet",
+      "place" : "bar",
+      "saved" : true,
+      "uid" : "c0Mc4LvvGWTiqAzrlBQLK2Iwrh43",
+      "when" : "30 min"
+    }
+  },
+  "users" : {
+    "user1" : {
+      "name" : "Adam Smith",
+      "uid" : "c0Mc4LvvGWTiqAzrlBQLK2Iwrh43"
+    },
+    "user2" : {
+      "name" : "Test User",
+      "uid" : "foobar"
+    }
+  }
+}
